@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/Toolbar"
+        android:title="@string/app_name"
+        android:navigationIcon="@mipmap/ic_menu_white_24dp"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addTitleEditText"
+        android:hint="@string/title"
+        style="@android:style/Widget.EditText"
+        android:padding="8dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addTitleLabel"
+        android:text="@string/add_title_label"
+        style="@android:style/Widget.TextView"
+        android:padding="8dp"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addCategoryEditText"
+        android:hint="@string/category"
+        style="@android:style/Widget.EditText"
+        android:padding="8dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editCategoryLabel"
+        android:text="@string/category"
+        android:padding="8dp"/>
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/title"
+        android:id="@+id/addUnitsSpinner"
+        android:padding="8dp"
+        android:entries="@array/dijooStringArray"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_title_label"
+        android:padding="8dp"
+        android:id="@+id/addUnitsLabel"
+        style="@android:style/Widget.TextView"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_submit_button"
+        android:text="@string/add_dijoo_button"/>
+
+
+</LinearLayout>

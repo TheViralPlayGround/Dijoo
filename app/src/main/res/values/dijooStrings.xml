@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="dijooStringArray">
+        <item
+            >Dijoo Item Title</item>
+        <item
+            >Dijoo Item Subtitle</item>
+    </string-array>
+</resources>
