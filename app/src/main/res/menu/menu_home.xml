@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.diplomat.dijoo.HomeActivity">
+
+    <item
+        android:title="@string/add_dijoo_menu_item"
+        android:id="@+id/add_new_dijoo_icon"
+        android:icon="@mipmap/ic_add_circle_white_24dp"
+        />
+
+</menu>
