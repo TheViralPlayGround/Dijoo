@@ -8,11 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-
-import com.example.diplomat.dijoo.Li
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
@@ -22,7 +19,8 @@ public class HomeActivity extends AppCompatActivity {
     private Bundle extras;
     DijooAdapter adapter;
 
-    ArrayAdapter
+    private AnimatedExpandableListView listVieww;
+    private ExpandableListViewActivity.ExampleAdapter adapterr;
 
     ListView listView;
 

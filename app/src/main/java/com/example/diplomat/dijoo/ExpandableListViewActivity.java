@@ -12,11 +12,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.TextView;
 
-import com.csform.android.uiapptemplate.view.AnimatedExpandableListView.AnimatedExpandableListAdapter;
+import com.example.diplomat.dijoo.AnimatedExpandableListView.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +31,14 @@ import java.util.List;
  */
 public class ExpandableListViewActivity extends ActionBarActivity {
 
-	private AnimatedExpandableListView listView;
-	private ExampleAdapter adapter;
+	public AnimatedExpandableListView listView;
+	public ExampleAdapter adapter;
 
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_expandable_list_view);
+//		setContentView(R.layout.activity_expandable_list_view);
 
 		List<GroupItem> items = new ArrayList<GroupItem>();
 
@@ -64,7 +65,7 @@ public class ExpandableListViewActivity extends ActionBarActivity {
 		adapter.setData(items);
 
 		listView = (AnimatedExpandableListView) findViewById(R.id.list_view);
-		listView.setAdapter(adapter);
+		listView.setAdapter((ExpandableListAdapter) adapter);
 
 		// In order to show animations, we need to use a custom click handler
 		// for our ExpandableListView.
@@ -111,7 +112,7 @@ public class ExpandableListViewActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private static class GroupItem {
+	public static class GroupItem {
 		String title;
 		List<ChildItem> items = new ArrayList<ChildItem>();
 	}
@@ -133,7 +134,7 @@ public class ExpandableListViewActivity extends ActionBarActivity {
 	/**
 	 * Adapter for our list of {@link GroupItem}s.
 	 */
-	private class ExampleAdapter extends AnimatedExpandableListAdapter {
+	public class ExampleAdapter extends AnimatedExpandableListAdapter {
 		private LayoutInflater inflater;
 
 		private List<GroupItem> items;
