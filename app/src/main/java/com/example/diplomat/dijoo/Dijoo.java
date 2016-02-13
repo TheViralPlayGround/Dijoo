@@ -8,16 +8,16 @@ import java.util.ArrayList;
 public class Dijoo {
 
     public String dijooTitle;
-    public String dijooSubtitle;
+    public String dijooCategory;
     public String dijooUnits;
-    public String dijooLocation;
+    public String checkInID;
     public static ArrayList<Dijoo> newDijoo = new ArrayList<>();
 
-    public  Dijoo (String dijooTitle, String currentValue, String units, String location){
+    public  Dijoo (String dijooTitle, String category, String units, String checkInID){
         this.dijooTitle = dijooTitle;
-        this.dijooSubtitle = currentValue;
+        this.dijooCategory = category;
         this.dijooUnits = units;
-        this.dijooLocation = location;
+        this.checkInID = checkInID;
     }
 
 
@@ -25,7 +25,7 @@ public class Dijoo {
         ArrayList<Dijoo> users = new ArrayList<Dijoo>();
 
         for(int i = 0; i <numUsers; i++)
-        users.add(new Dijoo("Dijoo Item Title", "Dijoo Item SubTitle", null, null));
+        users.add(new Dijoo("Dijoo Item Title", "Dijoo Item Category", null, null));
         return users;
     }
 
@@ -35,5 +35,6 @@ public class Dijoo {
         return newDijoo;
 
     }
+
 
 }

@@ -1,9 +1,9 @@
 package com.example.diplomat.dijoo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -14,8 +14,6 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private DrawerLayout mainDrawerLayout;
-    private ListView navDrawerListView;
     private Bundle extras;
     DijooAdapter adapter;
 
@@ -28,7 +26,7 @@ public class HomeActivity extends AppCompatActivity {
     public String addedTitle;
     public String addedCategory;
     public String addedUnits;
-
+    DBHandler DijooDatabase;
 
 
 
@@ -40,14 +38,37 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         buildToolBar(toolbar);
-        loadDijooList();
-        loadNavDrawer();
+
+        final String PREFS_NAME = "MyPrefsFile";
+
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+
+        if (settings.getBoolean("my_first_time", true)) {
+            //the app is being launched for first time, do something
+            Log.d("1313", "First time");
+
+            createDB();
+            loadDijooList();
+
+            //Record first time status
+            settings.edit().putBoolean("my_first_time", false).commit();
+        }
 
         extras = getIntent().getExtras();
         if(extras!=null) {
             checkNewDijoo(extras);
         }
 
+    }
+
+    private void createDB() {
+
+        DijooDatabase = new DBHandler(getApplicationContext(), "DijooDB" , null, 1);
+
+//        DijooDatabase.getReadableDatabase().beginTransaction();
+//      DijooDatabase.getDijooTitle(3, DijooDatabase.getReadableDatabase());  Might use this code later
+
+//        DijooDatabase.close();
     }
 
     private void checkNewDijoo(Bundle bundle) {
@@ -71,7 +92,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private void loadDijooList() {
 
-        ArrayList<Dijoo> dijooArrayList = Dijoo.getUsers(10);
+//        ArrayList<Dijoo> dijooArrayList = Dijoo.getUsers(10);
+
+
+        ArrayList<Dijoo> dijooArrayList = DijooDatabase.getDBDijoos(DijooDatabase.getReadableDatabase());
 
          adapter = new DijooAdapter(this, dijooArrayList);
 
@@ -81,12 +105,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-        private void loadNavDrawer(){
 
-            mainDrawerLayout = (DrawerLayout) findViewById(R.id.navDrawerLayout);
-            navDrawerListView = (ListView) findViewById(R.id.left_drawer);
-
-    }
 
     private void buildToolBar(android.support.v7.widget.Toolbar toolbar){
 
@@ -103,6 +122,8 @@ public class HomeActivity extends AppCompatActivity {
         toolbar.setLogo(R.mipmap.ic_smoke_free_black_24dp);
         toolbar.setBackgroundColor(red);
     }
+
+
 
 
 
@@ -140,4 +161,6 @@ public class HomeActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

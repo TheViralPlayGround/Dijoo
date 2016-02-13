@@ -31,7 +31,7 @@ public class DijooAdapter extends ArrayAdapter<Dijoo> {
         TextView dijooUnits = (TextView) convertView.findViewById(R.id.unitsText) ;
         // Populate the data into the template view using the data object
         dijooTitle.setText(dijoo.dijooTitle);
-        dijooCategory.setText(dijoo.dijooSubtitle);
+        dijooCategory.setText(dijoo.dijooCategory);
         dijooUnits.setText(dijoo.dijooUnits);
         // Return the completed view to render on screen
         return convertView;

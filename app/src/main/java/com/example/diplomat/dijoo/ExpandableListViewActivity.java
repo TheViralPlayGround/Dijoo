@@ -65,7 +65,7 @@ public class ExpandableListViewActivity extends ActionBarActivity {
 		adapter.setData(items);
 
 		listView = (AnimatedExpandableListView) findViewById(R.id.list_view);
-		listView.setAdapter((ExpandableListAdapter) adapter);
+		listView.setAdapter(adapter);
 
 		// In order to show animations, we need to use a custom click handler
 		// for our ExpandableListView.

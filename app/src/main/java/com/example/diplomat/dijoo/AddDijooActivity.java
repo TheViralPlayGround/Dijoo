@@ -1,5 +1,6 @@
 package com.example.diplomat.dijoo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,10 @@ public class AddDijooActivity extends HomeActivity {
     String newTitle;
     String newCategory;
     String newUnits;
+
+    DBHandler DijooDatabase;
+    Context context;
+
 
     public AddDijooActivity(){
 
@@ -46,11 +51,20 @@ public class AddDijooActivity extends HomeActivity {
                 newUnits = String.valueOf(editUnits.getSelectedItem());
 
                 Intent in = new Intent(AddDijooActivity.this, HomeActivity.class);
-                in.putExtra("Added title", newTitle);
-                in.putExtra("Added category", newCategory);
-                in.putExtra("Added units", newUnits);
 
                 startActivity(in);
+
+
+                context = getApplicationContext();
+                DijooDatabase = new DBHandler(context, "DijooDB" , null, 1);
+
+                DijooDatabase.getWritableDatabase().beginTransaction();
+
+                DijooDatabase.addNewDijooToDB(newTitle, newCategory, newUnits, DijooDatabase.getWritableDatabase());
+
+
+
+
 
             }
         });
