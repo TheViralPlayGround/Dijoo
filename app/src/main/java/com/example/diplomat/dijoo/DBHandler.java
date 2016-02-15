@@ -48,17 +48,17 @@ public class DBHandler extends SQLiteOpenHelper{
                 + DIJOO_TABLE + "(" + DIJOO_ID + " integer primary key autoincrement, "
                 + DIJOO_TITLE + " string,"+ DIJOO_CATEGORY + " string," + DIJOO_UNITS + " string);";
 
-
         db.execSQL(DATABASE_CREATE_DIJOO);
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(DIJOO_ID, 3);
+        contentValues.put(DIJOO_ID, 1);
         contentValues.put(DIJOO_TITLE, "ExampleDijooOne");
         contentValues.put(DIJOO_CATEGORY, "Ex. Category");
         contentValues.put(DIJOO_UNITS, "Dayzzz");
 
         db.insert(DIJOO_TABLE, null, contentValues);
+
 
     }
 
@@ -73,8 +73,9 @@ public class DBHandler extends SQLiteOpenHelper{
     }
 
 
+
     public String getDijooTitle (Integer id, SQLiteDatabase db){
-        db.beginTransaction();
+
         String title = "EMPTFIELD";
 
         Cursor ccc = db.rawQuery("SELECT " + DIJOO_TITLE + " FROM " + DIJOO_TABLE + " WHERE " + DIJOO_ID + "= ?; ", new String[] {id.toString()});
@@ -84,12 +85,13 @@ public class DBHandler extends SQLiteOpenHelper{
         title = ccc.getString(ccc.getColumnIndex(DIJOO_TITLE));}
 
 
+
     return title;
 
     }
 
     public String getDijooCategory (Integer id, SQLiteDatabase db){
-        db.beginTransaction();
+
         String title = "EMPTFIELD";
 
         Cursor ccc = db.rawQuery("SELECT " + DIJOO_CATEGORY + " FROM " + DIJOO_TABLE + " WHERE " + DIJOO_ID + "= ?; ", new String[] {id.toString()});
@@ -104,7 +106,6 @@ public class DBHandler extends SQLiteOpenHelper{
     }
 
     public String getDijooUnits(Integer id, SQLiteDatabase db){
-        db.beginTransaction();
         String title = "EMPTFIELD";
 
         Cursor ccc = db.rawQuery("SELECT " + DIJOO_UNITS + " FROM " + DIJOO_TABLE + " WHERE " + DIJOO_ID + "= ?; ", new String[] {id.toString()});
@@ -114,14 +115,11 @@ public class DBHandler extends SQLiteOpenHelper{
             title = ccc.getString(ccc.getColumnIndex(DIJOO_UNITS));}
 
 
-
         return title;
 
     }
 
     public void addNewDijooToDB(String title, String category, String units, SQLiteDatabase db) {
-
-        db.beginTransaction();
 
         int unitID = 0;
 
@@ -166,8 +164,6 @@ public class DBHandler extends SQLiteOpenHelper{
         db.insert(DIJOO_TABLE, null, cvalues);
 
 
-
-
     }
 
     public ArrayList<Dijoo> getDBDijoos(SQLiteDatabase db){
@@ -177,12 +173,31 @@ public class DBHandler extends SQLiteOpenHelper{
         String dCategory;
         String dUnits;
 
-        db.beginTransaction();
-        dTitle = getDijooTitle(3, db);
-        dCategory = getDijooCategory(3,db);
-        dUnits = getDijooUnits(3,db);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DIJOO_TABLE + ";", null);
 
-        dijooArray.add(new Dijoo(dTitle, dCategory, null, null));
+        int numofdbrows = cursor.getCount() + 1;
+        cursor.close();
+
+
+        for(int i = 1; i<numofdbrows; i++) {
+            dTitle = getDijooTitle(i, db);
+            dCategory = getDijooCategory(i, db);
+            dUnits = getDijooUnits(i, db);
+
+            dijooArray.add(new Dijoo(dTitle, dCategory, null, null));
+        }
+
         return dijooArray;
+    }
+
+    public ArrayList<Integer> getDBIDs(SQLiteDatabase db){
+
+        ArrayList<Integer> allIDs = new ArrayList<>();
+        Cursor cursor;
+
+
+        String sqlToGetAllIDs = "SELECT * FROM " + DIJOO_TABLE + " WHERE ";
+
+        return allIDs;
     }
 }

@@ -3,8 +3,8 @@ package com.example.diplomat.dijoo;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     private Bundle extras;
     DijooAdapter adapter;
@@ -26,7 +26,9 @@ public class HomeActivity extends AppCompatActivity {
     public String addedTitle;
     public String addedCategory;
     public String addedUnits;
-    DBHandler DijooDatabase;
+
+    BaseActivity mBaseActivity;
+    SharedPreferences settings;
 
 
 
@@ -36,23 +38,29 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.content_home);
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        final String PREFS_NAME = "MyPrefsFile";
+
+        context = this.getApplicationContext();
+
+        settings = getSharedPreferences(PREFS_NAME, 0);
+
+        mBaseActivity = new BaseActivity();
+        context = getApplicationContext();
 
         buildToolBar(toolbar);
 
-        final String PREFS_NAME = "MyPrefsFile";
-
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-
         if (settings.getBoolean("my_first_time", true)) {
             //the app is being launched for first time, do something
-            Log.d("1313", "First time");
+//            Log.d("1313", "First time");
 
             createDB();
-            loadDijooList();
+
 
             //Record first time status
             settings.edit().putBoolean("my_first_time", false).commit();
         }
+
+        loadDijooList();
 
         extras = getIntent().getExtras();
         if(extras!=null) {
@@ -61,15 +69,6 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void createDB() {
-
-        DijooDatabase = new DBHandler(getApplicationContext(), "DijooDB" , null, 1);
-
-//        DijooDatabase.getReadableDatabase().beginTransaction();
-//      DijooDatabase.getDijooTitle(3, DijooDatabase.getReadableDatabase());  Might use this code later
-
-//        DijooDatabase.close();
-    }
 
     private void checkNewDijoo(Bundle bundle) {
 
@@ -94,12 +93,11 @@ public class HomeActivity extends AppCompatActivity {
 
 //        ArrayList<Dijoo> dijooArrayList = Dijoo.getUsers(10);
 
+        SQLiteDatabase database = DijooDatabase.getReadableDatabase();
 
-        ArrayList<Dijoo> dijooArrayList = DijooDatabase.getDBDijoos(DijooDatabase.getReadableDatabase());
+        ArrayList<Dijoo> dijooArrayList = DijooDatabase.getDBDijoos(database);
 
-         adapter = new DijooAdapter(this, dijooArrayList);
-
-
+        adapter = new DijooAdapter(this, dijooArrayList);
         listView = (ListView) findViewById(R.id.dijoo_list_view);
         listView.setAdapter(adapter);
 
@@ -124,8 +122,15 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    private void createDB() {
 
+        DijooDatabase = new DBHandler(context, "DijooDB" , null, 1);
 
+//        DijooDatabase.getReadableDatabase().beginTransaction();
+//      DijooDatabase.getDijooTitle(3, DijooDatabase.getReadableDatabase());  Might use this code later
+
+//        DijooDatabase.close();
+    }
 
 
 
@@ -156,11 +161,16 @@ public class HomeActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         Intent intent = new Intent(HomeActivity.this, AddDijooActivity.class);
-
         startActivity(intent);
 
         return super.onOptionsItemSelected(item);
     }
+
+//    @Override
+//    public void onDestroy(){
+//        super.onDestroy();
+//        DijooDatabase.close();
+//    }
 
 
 }

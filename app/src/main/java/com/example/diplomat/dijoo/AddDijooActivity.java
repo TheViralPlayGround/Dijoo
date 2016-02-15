@@ -2,6 +2,7 @@ package com.example.diplomat.dijoo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,8 +22,6 @@ public class AddDijooActivity extends HomeActivity {
     String newTitle;
     String newCategory;
     String newUnits;
-
-    DBHandler DijooDatabase;
     Context context;
 
 
@@ -52,15 +51,14 @@ public class AddDijooActivity extends HomeActivity {
 
                 Intent in = new Intent(AddDijooActivity.this, HomeActivity.class);
 
+                context = getApplicationContext();
+
+                SQLiteDatabase database = DijooDatabase.getWritableDatabase();
+                DijooDatabase.addNewDijooToDB(newTitle, newCategory, newUnits, database);
+
                 startActivity(in);
 
 
-                context = getApplicationContext();
-                DijooDatabase = new DBHandler(context, "DijooDB" , null, 1);
-
-                DijooDatabase.getWritableDatabase().beginTransaction();
-
-                DijooDatabase.addNewDijooToDB(newTitle, newCategory, newUnits, DijooDatabase.getWritableDatabase());
 
 
 
@@ -72,6 +70,13 @@ public class AddDijooActivity extends HomeActivity {
 
 
 
+    }
+
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        DijooDatabase.close();
     }
 
 }
