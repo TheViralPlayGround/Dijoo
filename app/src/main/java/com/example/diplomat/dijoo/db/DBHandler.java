@@ -1,10 +1,12 @@
-package com.example.diplomat.dijoo;
+package com.example.diplomat.dijoo.db;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.diplomat.dijoo.Dijoo;
 
 import java.util.ArrayList;
 
@@ -13,7 +15,7 @@ import java.util.ArrayList;
  */
 public class DBHandler extends SQLiteOpenHelper{
 
-    public DBHandler(Context context, Object o, Object o1, int i) {
+    public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -29,6 +31,8 @@ public class DBHandler extends SQLiteOpenHelper{
     public static final String DIJOO_UNITS      = "dijooUnits";
 //    public static final String COLUMN_COACH     = "coach";
 //    public static final String COLUMN_STADIUM   = "stadium";
+
+
 
 
 
@@ -186,6 +190,7 @@ public class DBHandler extends SQLiteOpenHelper{
 
             dijooArray.add(new Dijoo(dTitle, dCategory, null, null));
         }
+
 
         return dijooArray;
     }

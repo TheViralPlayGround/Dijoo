@@ -3,12 +3,14 @@ package com.example.diplomat.dijoo;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.example.diplomat.dijoo.db.DBHandler;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,8 @@ public class HomeActivity extends BaseActivity {
 
     ListView listView;
 
+    ArrayList<Dijoo> dijooArrayList;
+
 
     public String addedTitle;
     public String addedCategory;
@@ -29,7 +33,6 @@ public class HomeActivity extends BaseActivity {
 
     BaseActivity mBaseActivity;
     SharedPreferences settings;
-
 
 
     @Override
@@ -41,75 +44,61 @@ public class HomeActivity extends BaseActivity {
         final String PREFS_NAME = "MyPrefsFile";
 
         context = this.getApplicationContext();
-
         settings = getSharedPreferences(PREFS_NAME, 0);
-
         mBaseActivity = new BaseActivity();
         context = getApplicationContext();
+        dbHandler = new DBHandler(HomeActivity.this);
 
         buildToolBar(toolbar);
 
-        if (settings.getBoolean("my_first_time", true)) {
-            //the app is being launched for first time, do something
-//            Log.d("1313", "First time");
 
-            createDB();
+//        if (settings.getBoolean("my_first_time", true)) {
+//            settings.edit().putBoolean("my_first_time", false).commit();
+//        }
 
-
-            //Record first time status
-            settings.edit().putBoolean("my_first_time", false).commit();
-        }
-
+        BaseActivity.database = BaseActivity.dbHandler.getReadableDatabase();
         loadDijooList();
 
-        extras = getIntent().getExtras();
-        if(extras!=null) {
-            checkNewDijoo(extras);
-        }
 
     }
 
+    public void loadDijooList() {
+        database = BaseActivity.dbHandler.getReadableDatabase();
 
-    private void checkNewDijoo(Bundle bundle) {
+        dijooArrayList = dbHandler.getDBDijoos(database);
 
-
-        addedTitle = bundle.getString("Added title");
-        addedCategory = bundle.getString("Added category");
-        addedUnits = bundle.getString("Added units");
-        Log.d("Added new dijoo", addedTitle + " " + addedCategory + " " + addedUnits);
-
-
-        ArrayList<Dijoo> dijooArrayList = Dijoo.addDijoo(addedTitle, addedCategory,addedUnits, null);
         adapter = new DijooAdapter(this, dijooArrayList);
         listView = (ListView) findViewById(R.id.dijoo_list_view);
         listView.setAdapter(adapter);
 
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                //Creatte dialog to delete
+
+                return false;
+            }
+        });
 
     }
 
-    private void loadDijooList() {
 
-//        ArrayList<Dijoo> dijooArrayList = Dijoo.getUsers(10);
-
-        SQLiteDatabase database = DijooDatabase.getReadableDatabase();
-
-        ArrayList<Dijoo> dijooArrayList = DijooDatabase.getDBDijoos(database);
-
-        adapter = new DijooAdapter(this, dijooArrayList);
-        listView = (ListView) findViewById(R.id.dijoo_list_view);
-        listView.setAdapter(adapter);
-
-    }
-
-
-
-    private void buildToolBar(android.support.v7.widget.Toolbar toolbar){
+    private void buildToolBar(android.support.v7.widget.Toolbar toolbar) {
 
         Resources resources = this.getResources();
         int white = resources.getColor(R.color.white);
-        int red = resources.getColor(R.color.red);
+        int red = resources.getColor(R.color.material_light_blue_A400);
 
 
         toolbar.setNavigationIcon(R.mipmap.ic_menu_white_24dp);
@@ -120,31 +109,6 @@ public class HomeActivity extends BaseActivity {
         toolbar.setLogo(R.mipmap.ic_smoke_free_black_24dp);
         toolbar.setBackgroundColor(red);
     }
-
-
-    private void createDB() {
-
-        DijooDatabase = new DBHandler(context, "DijooDB" , null, 1);
-
-//        DijooDatabase.getReadableDatabase().beginTransaction();
-//      DijooDatabase.getDijooTitle(3, DijooDatabase.getReadableDatabase());  Might use this code later
-
-//        DijooDatabase.close();
-    }
-
-
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-
-
 
 
     @Override
@@ -160,8 +124,14 @@ public class HomeActivity extends BaseActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        Intent intent = new Intent(HomeActivity.this, AddDijooActivity.class);
-        startActivity(intent);
+
+
+        switch (id) {
+            case R.id.add_new_dijoo_icon:
+                Intent intent = new Intent(HomeActivity.this, AddDijooFragment.class);
+                startActivity(intent);
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -169,7 +139,7 @@ public class HomeActivity extends BaseActivity {
 //    @Override
 //    public void onDestroy(){
 //        super.onDestroy();
-//        DijooDatabase.close();
+//        dbHandler.close();
 //    }
 
 

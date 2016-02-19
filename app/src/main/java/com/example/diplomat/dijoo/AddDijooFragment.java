@@ -1,18 +1,22 @@
 package com.example.diplomat.dijoo;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.diplomat.dijoo.db.DBContract;
+
 /**
  * Created by Diplomat on 1/23/2016.
  */
-public class AddDijooActivity extends HomeActivity {
+public class AddDijooFragment extends FragmentActivity {
 
     EditText editTitle;
     EditText editCategory;
@@ -25,16 +29,17 @@ public class AddDijooActivity extends HomeActivity {
     Context context;
 
 
-    public AddDijooActivity(){
+
+    public AddDijooFragment(){
 
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.add_dijoo_layout);
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         editTitle = (EditText) findViewById(R.id.addTitleEditText);
         editCategory = (EditText) findViewById(R.id.addCategoryEditText);
@@ -49,20 +54,22 @@ public class AddDijooActivity extends HomeActivity {
                 newCategory = String.valueOf(editCategory.getText());
                 newUnits = String.valueOf(editUnits.getSelectedItem());
 
-                Intent in = new Intent(AddDijooActivity.this, HomeActivity.class);
+                Intent in = new Intent(AddDijooFragment.this, HomeActivity.class);
+                BaseActivity.database = BaseActivity.dbHandler.getReadableDatabase();
 
-                context = getApplicationContext();
 
-                SQLiteDatabase database = DijooDatabase.getWritableDatabase();
-                DijooDatabase.addNewDijooToDB(newTitle, newCategory, newUnits, database);
+                ContentValues values = new ContentValues();
+
+                values.clear();
+                values.put(DBContract.Columns.DIJOO_TITLE,newTitle);
+                values.put(DBContract.Columns.DIJOO_CATEGORY,newCategory);
+                values.put(DBContract.Columns.DIJOO_UNITS,newUnits);
+
+
+                Uri uri = DBContract.CONTENT_URI;
+                getApplicationContext().getContentResolver().insert(uri,values);
 
                 startActivity(in);
-
-
-
-
-
-
 
             }
         });
@@ -71,12 +78,4 @@ public class AddDijooActivity extends HomeActivity {
 
 
     }
-
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        DijooDatabase.close();
-    }
-
 }

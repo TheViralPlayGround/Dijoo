@@ -21,7 +21,7 @@
 
         </activity>
 
-        <activity android:name=".AddDijooActivity"
+        <activity android:name=".AddDijooFragment"
             android:label="@string/add_dijoo_menu_item"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -32,6 +32,13 @@
             >
 
         </activity>
+
+        <provider
+            android:authorities="com.example.diplomat.dijoo.db"
+            android:name=".db.TaskProvider"
+            />
+
+
     </application>
 
 </manifest>
