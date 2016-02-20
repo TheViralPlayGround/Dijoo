@@ -1,5 +1,7 @@
 package com.example.diplomat.dijoo;
 
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -8,31 +10,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.diplomat.dijoo.db.DBHandler;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class HomeActivity extends BaseActivity {
 
     private Bundle extras;
     DijooAdapter adapter;
 
-    private AnimatedExpandableListView listVieww;
-    private ExpandableListViewActivity.ExampleAdapter adapterr;
-
     ListView listView;
 
     ArrayList<Dijoo> dijooArrayList;
 
-
-    public String addedTitle;
-    public String addedCategory;
-    public String addedUnits;
-
     BaseActivity mBaseActivity;
     SharedPreferences settings;
+    Button datePickerButton;
+
+    FragmentManager fm;
 
 
     @Override
@@ -58,7 +59,19 @@ public class HomeActivity extends BaseActivity {
 
         BaseActivity.database = BaseActivity.dbHandler.getReadableDatabase();
         loadDijooList();
+        datePickerClicked();
+        setCurrentDate();
 
+
+
+
+    }
+
+    private void setCurrentDate() {
+
+        currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+
+        datePickerButton.setText(currentDate);
 
     }
 
@@ -91,6 +104,23 @@ public class HomeActivity extends BaseActivity {
             }
         });
 
+    }
+
+    public void datePickerClicked(){
+
+        fm = this.getFragmentManager();
+
+        datePickerButton = (Button) findViewById(R.id.datePickerButton);
+
+        datePickerButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               DialogFragment newFragment = new DatePickerFragment();
+               newFragment.show(fm, "datePicker");
+           }
+                                            }
+        )
+        ;
     }
 
 

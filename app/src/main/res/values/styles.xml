@@ -47,7 +47,7 @@
 
 
     <style name ="DijooCardBackground">
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/material_red_200</item>
     </style>
 
     <!-- Default application theme -->

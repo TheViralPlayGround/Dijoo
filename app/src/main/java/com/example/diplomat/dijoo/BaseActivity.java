@@ -16,6 +16,11 @@ public class BaseActivity extends AppCompatActivity {
     protected  Context context;
     protected static SQLiteDatabase database;
 
+
+    protected static String currentDate;
+
+
+
     Window window;
 
 
@@ -42,6 +47,8 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onStop(){
+
+        dbHandler.close();
         super.onStop();
 
 

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.diplomat.dijoo.HomeActivity"
+    tools:context=".DijooListFragment"
     style="@style/DijooCardBackground">
 
     <ListView android:id="@+id/left_drawer"
@@ -26,7 +26,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.diplomat.dijoo.HomeActivity"
+    tools:context=".DijooListFragment"
     tools:showIn="@layout/activity_home"
         >
 
@@ -39,6 +39,23 @@
             android:title="@string/app_name"
             android:navigationIcon="@mipmap/ic_menu_white_24dp"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/material_light_blue_200">
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|fill_vertical"
+                android:text="Today"
+                android:id="@+id/datePickerButton"
+                android:background="@color/material_light_blue_200"/>
+
+
+        </LinearLayout>
+
 
     <ListView
         android:id="@+id/dijoo_list_view"

@@ -194,4 +194,5 @@
 
     <!-- For Update -->
     <string name="confirm_exit">Press Back button again to exit</string>
+    <string name="total">Total</string>
 </resources>
