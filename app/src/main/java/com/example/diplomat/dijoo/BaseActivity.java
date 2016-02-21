@@ -7,6 +7,10 @@ import android.view.Window;
 
 import com.example.diplomat.dijoo.db.DBHandler;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by Diplomat on 2/14/2016.
  */
@@ -17,7 +21,7 @@ public class BaseActivity extends AppCompatActivity {
     protected static SQLiteDatabase database;
 
 
-    protected static String currentDate;
+    public String currentDate = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
 
 
 

@@ -35,6 +35,8 @@ public class HomeActivity extends BaseActivity {
 
     FragmentManager fm;
 
+    String currentDate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +62,17 @@ public class HomeActivity extends BaseActivity {
         BaseActivity.database = BaseActivity.dbHandler.getReadableDatabase();
         loadDijooList();
         datePickerClicked();
-        setCurrentDate();
+        setDate();
 
 
 
 
     }
 
-    private void setCurrentDate() {
 
-        currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+    private void setDate() {
+
+        currentDate = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
 
         datePickerButton.setText(currentDate);
 
@@ -88,7 +91,9 @@ public class HomeActivity extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(HomeActivity.this, CheckInFragment.class);
 
+                startActivity(i);
 
             }
         });
@@ -118,7 +123,7 @@ public class HomeActivity extends BaseActivity {
                DialogFragment newFragment = new DatePickerFragment();
                newFragment.show(fm, "datePicker");
            }
-                                            }
+        }
         )
         ;
     }
