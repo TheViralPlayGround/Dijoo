@@ -26,12 +26,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/cancel_action"
+            android:id="@+id/cancel_button"
             android:text="Cancel"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/update"
+            android:id="@+id/update_button"
             android:text="Submit"/>
     </LinearLayout>
 
