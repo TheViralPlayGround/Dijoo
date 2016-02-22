@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.diplomat.dijoo.Dijoo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Diplomat on 2/10/2016.
@@ -170,8 +171,8 @@ public class DBHandler extends SQLiteOpenHelper{
 
     }
 
-    public ArrayList<Dijoo> getDBDijoos(SQLiteDatabase db){
-        ArrayList<Dijoo> dijooArray = new ArrayList<>();
+    public List<Dijoo> getDBDijoos(SQLiteDatabase db){
+        List<Dijoo> dijooArray = new ArrayList<>();
 
         String dTitle;
         String dCategory;

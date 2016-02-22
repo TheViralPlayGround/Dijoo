@@ -8,34 +8,36 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 
 import com.example.diplomat.dijoo.db.DBHandler;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class HomeActivity extends BaseActivity {
 
     private Bundle extras;
-    DijooAdapter adapter;
+    DijooRecAdapter adapter;
 
-    ListView listView;
+    RecyclerView listView;
 
-    ArrayList<Dijoo> dijooArrayList;
+    List<Dijoo> dijooArrayList;
 
     BaseActivity mBaseActivity;
     SharedPreferences settings;
     Button datePickerButton;
 
     FragmentManager fm;
+
+    LinearLayoutManager linearLayoutManager;
 
     String currentDate;
     int mStackLevel;
@@ -54,6 +56,7 @@ public class HomeActivity extends BaseActivity {
         mBaseActivity = new BaseActivity();
         context = getApplicationContext();
         dbHandler = new DBHandler(HomeActivity.this);
+        linearLayoutManager = new LinearLayoutManager(context);
 
         buildToolBar(toolbar);
 
@@ -82,34 +85,19 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void loadDijooList() {
+
         database = BaseActivity.dbHandler.getReadableDatabase();
-
         dijooArrayList = dbHandler.getDBDijoos(database);
+        adapter = new DijooRecAdapter(dijooArrayList);
 
-        adapter = new DijooAdapter(this, dijooArrayList);
-        listView = (ListView) findViewById(R.id.dijoo_list_view);
+
+
+
+        listView = (RecyclerView) findViewById(R.id.dijoo_list_view);
+        listView.setLayoutManager(linearLayoutManager);
+
+
         listView.setAdapter(adapter);
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                checkInDialog();
-
-            }
-        });
-
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-                //Creatte dialog to delete
-
-                return false;
-            }
-        });
-
     }
 
     public void datePickerClicked(){
