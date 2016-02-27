@@ -6,7 +6,6 @@
     android:layout_marginRight="16dp"
     android:divider="@color/divider_color"
     android:showDividers="beginning"
-    style="@style/DijooCardBackground"
     android:weightSum="10">
 
 

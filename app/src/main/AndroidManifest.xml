@@ -44,7 +44,7 @@
             android:name=".db.TaskProvider"
             />
 
-
+        <uses-permission android:name="android.permission.INTERNET" />
     </application>
 
 </manifest>

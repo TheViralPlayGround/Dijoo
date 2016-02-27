@@ -133,7 +133,7 @@ public class HomeActivity extends BaseActivity {
         // Create and show the dialog.
         DialogFragment newFragment = CheckInDialogFragment.newInstance(mStackLevel);
         newFragment.show(ft, "dialog");
-    }
+     }
 
 
     private void buildToolBar(android.support.v7.widget.Toolbar toolbar) {
