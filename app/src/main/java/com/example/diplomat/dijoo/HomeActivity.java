@@ -63,21 +63,30 @@ public class HomeActivity extends BaseActivity {
         buildToolBar(toolbar);
 
 
-
 //        if (settings.getBoolean("my_first_time", true)) {
 //            settings.edit().putBoolean("my_first_time", false).commit();
 //        }
 
         BaseActivity.database = BaseActivity.dbHandler.getReadableDatabase();
-        dijooFireBase.setValue(new Dijoo (null, null, null, null));
-
         loadDijooList();
         datePickerClicked();
         setDate();
 
+        updateDijooUser("dij1313", "Alfred Morris", 3932);
 
 
 
+
+    }
+
+    private void updateDijooUser(String userID, String name, int age) {
+
+
+        Firebase user = dijooFireBase.child("dijooUsers").child(userID);
+
+        DijooUser newUser = new DijooUser(name, age);
+
+        user.setValue(newUser);
     }
 
 
