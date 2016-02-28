@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.diplomat.dijoo.db.DBHandler;
+import com.firebase.client.Firebase;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,10 +56,12 @@ public class HomeActivity extends BaseActivity {
         settings = getSharedPreferences(PREFS_NAME, 0);
         mBaseActivity = new BaseActivity();
         context = getApplicationContext();
+        dijooFireBase = new Firebase("https://luminous-inferno-8047.firebaseio.com/");
         dbHandler = new DBHandler(HomeActivity.this);
         linearLayoutManager = new LinearLayoutManager(context);
 
         buildToolBar(toolbar);
+
 
 
 //        if (settings.getBoolean("my_first_time", true)) {
@@ -66,6 +69,8 @@ public class HomeActivity extends BaseActivity {
 //        }
 
         BaseActivity.database = BaseActivity.dbHandler.getReadableDatabase();
+        dijooFireBase.setValue(new Dijoo (null, null, null, null));
+
         loadDijooList();
         datePickerClicked();
         setDate();
