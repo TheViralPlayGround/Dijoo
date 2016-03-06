@@ -28,6 +28,8 @@ public class AddDijooFragment extends FragmentActivity {
     String newUnits;
     Context context;
 
+    String userID;
+
 
 
     public AddDijooFragment(){
@@ -45,6 +47,9 @@ public class AddDijooFragment extends FragmentActivity {
         editCategory = (EditText) findViewById(R.id.addCategoryEditText);
         editUnits = (Spinner) findViewById(R.id.addUnitsSpinner);
         addDijooButton = (Button) findViewById(R.id.add_submit_button);
+
+        Intent intent = getIntent();
+        userID = intent.getStringExtra("ID");
 
         addDijooButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +74,7 @@ public class AddDijooFragment extends FragmentActivity {
                 Uri uri = DBContract.CONTENT_URI;
                 getApplicationContext().getContentResolver().insert(uri,values);
 
+                HomeActivity.fbHandler.addNewDijoo(BaseActivity.dijooFireBase, userID, newTitle, newCategory, newUnits);
                 startActivity(in);
 
             }

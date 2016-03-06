@@ -46,12 +46,4 @@ public class Dijoo {
 
     private List dijoos;
 
-    private void initializeData(){
-        dijoos = new ArrayList<>();
-        dijoos.add(new Dijoo("Emma Wilson", "23 years old", R.drawable.check_off_dark));
-        dijoos.add(new Dijoo("Lavery Maiss", "25 years old", R.drawable.cancel_white));
-        dijoos.add(new Dijoo("Lillie Watts", "35 years old", R.drawable.dipset_logo));
-    }
-
-
 }

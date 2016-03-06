@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
 import com.example.diplomat.dijoo.db.DBHandler;
+import com.example.diplomat.dijoo.db.FirebaseHandler;
 import com.firebase.client.Firebase;
 
 import java.text.SimpleDateFormat;
@@ -21,7 +22,8 @@ public class BaseActivity extends AppCompatActivity {
     protected static DBHandler dbHandler;
     protected  Context context;
     protected static SQLiteDatabase database;
-    Firebase dijooFireBase;
+    protected static Firebase dijooFireBase;
+    protected static FirebaseHandler fbHandler;
 
 
     public String currentDate = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());

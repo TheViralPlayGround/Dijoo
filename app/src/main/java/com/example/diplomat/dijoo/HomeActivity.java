@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.diplomat.dijoo.db.DBHandler;
+import com.example.diplomat.dijoo.db.FirebaseHandler;
 import com.firebase.client.Firebase;
 
 import java.text.SimpleDateFormat;
@@ -41,6 +42,7 @@ public class HomeActivity extends BaseActivity {
     LinearLayoutManager linearLayoutManager;
 
     String currentDate;
+    String userID = "AKA GET FAMILIAR";
     int mStackLevel;
 
 
@@ -57,6 +59,7 @@ public class HomeActivity extends BaseActivity {
         mBaseActivity = new BaseActivity();
         context = getApplicationContext();
         dijooFireBase = new Firebase("https://luminous-inferno-8047.firebaseio.com/");
+        fbHandler = new FirebaseHandler(userID);
         dbHandler = new DBHandler(HomeActivity.this);
         linearLayoutManager = new LinearLayoutManager(context);
 
@@ -72,8 +75,7 @@ public class HomeActivity extends BaseActivity {
         datePickerClicked();
         setDate();
 
-        updateDijooUser("dij1313", "Alfred Morris", 3932);
-
+//        updateDijooUser(userID, "Alfred Morris", 3932);
 
 
 
@@ -185,6 +187,7 @@ public class HomeActivity extends BaseActivity {
         switch (id) {
             case R.id.add_new_dijoo_icon:
                 Intent intent = new Intent(HomeActivity.this, AddDijooFragment.class);
+                intent.putExtra("ID", userID);
                 startActivity(intent);
         }
 
