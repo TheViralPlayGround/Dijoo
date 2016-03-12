@@ -46,7 +46,7 @@
     </style>
 
 
-    <style name ="DijooCardBackground">
+    <style name ="DijooPrimaryColor">
         <item name="android:background">@color/material_cyan_A200</item>
     </style>
 

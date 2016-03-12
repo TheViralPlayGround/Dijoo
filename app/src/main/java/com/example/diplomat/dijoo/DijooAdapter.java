@@ -27,7 +27,7 @@ public class DijooAdapter extends ArrayAdapter<Dijoo> {
         }
         // Lookup view for data population
         TextView dijooTitle = (TextView) convertView.findViewById(R.id.dijooItemTitle);
-        TextView dijooCategory = (TextView) convertView.findViewById(R.id.dijooItemSubtitle);
+        TextView dijooCategory = (TextView) convertView.findViewById(R.id.dijooItemCategory);
         TextView dijooUnits = (TextView) convertView.findViewById(R.id.total_count) ;
         // Populate the data into the template view using the data object
         dijooTitle.setText(dijoo.dijooTitle);

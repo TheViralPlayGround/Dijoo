@@ -4,38 +4,40 @@
     android:orientation="horizontal"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
-    android:divider="@color/divider_color"
-    android:showDividers="beginning"
-    android:weightSum="10">
-
-
-
+    android:weightSum="10"
+    >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="72dp"
         android:orientation="vertical"
         android:layout_weight="6"
         android:paddingLeft="16dp"
-        style="@style/DijooCardBackground">
+        >
 
     <TextView
         android:id="@+id/dijooItemTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/default_title"
-        style="@style/DijooTitle"/>
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_weight="6"
+        />
 
     <TextView
-        android:id="@+id/dijooItemSubtitle"
+        android:id="@+id/dijooItemCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/default_subtitle"
-        style="@style/DijooSubTitle"/>
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:layout_weight="6"
+        />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:orientation="vertical">
@@ -58,11 +60,20 @@
         />
         </LinearLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="72dp"
-        android:src="@mipmap/ic_add_circle_white_24dp"
+        android:orientation="horizontal"
         android:layout_weight="2"
-        android:id="@+id/dijooItemPicture"/>
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/total"
+            android:src="@mipmap/ic_add_box_black_24dp"
+            android:id="@+id/dijooPic"/>
+    </LinearLayout>
+
 
 </LinearLayout>
