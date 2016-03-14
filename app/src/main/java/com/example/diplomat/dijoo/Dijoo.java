@@ -10,15 +10,18 @@ public class Dijoo {
     public String dijooTitle;
     public String dijooCategory;
     public String dijooUnits;
-    public String currentDate;
+    public String dijooCreationDate;
     public int dijooPic;
     public static ArrayList<Dijoo> newDijoo = new ArrayList<>();
+
+    public Dijoo (){
+    }
 
     public  Dijoo (String currentDate, String dijooTitle, String category, String units){
         this.dijooTitle = dijooTitle;
         this.dijooCategory = category;
         this.dijooUnits = units;
-        this.currentDate = currentDate;
+        this.dijooCreationDate = currentDate;
     }
 
     public Dijoo (String title, String count, int dijooPic){
@@ -68,11 +71,11 @@ public class Dijoo {
     }
 
     public String getCurrentDate() {
-        return currentDate;
+        return dijooCreationDate;
     }
 
     public void setCurrentDate(String currentDate) {
-        this.currentDate = currentDate;
+        this.dijooCreationDate = currentDate;
     }
 
     public int getDijooPic() {
