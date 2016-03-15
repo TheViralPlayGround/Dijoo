@@ -36,9 +36,6 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
 
-        <provider
-            android:name=".db.TaskProvider"
-            android:authorities="com.example.diplomat.dijoo.db" />
     </application>
 
 </manifest>

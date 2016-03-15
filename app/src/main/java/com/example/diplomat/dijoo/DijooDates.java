@@ -1,3 +1,5 @@
+package com.example.diplomat.dijoo;
+
 import com.example.diplomat.dijoo.Dijoo;
 
 /**

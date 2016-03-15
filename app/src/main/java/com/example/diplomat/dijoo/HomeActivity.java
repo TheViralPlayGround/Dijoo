@@ -10,27 +10,22 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.example.diplomat.dijoo.Stling.RoundedImageView;
-import com.example.diplomat.dijoo.db.DBHandler;
 import com.example.diplomat.dijoo.db.FirebaseHandler;
 import com.firebase.client.Firebase;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class HomeActivity extends BaseActivity {
-
-    private Bundle extras;
 
     RecyclerView recyclerView;
     BaseActivity mBaseActivity;
@@ -53,7 +48,7 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_home);
-        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.dijooToolbar);
         setSupportActionBar(toolbar);
         final String PREFS_NAME = "MyPrefsFile";
 
@@ -64,7 +59,6 @@ public class HomeActivity extends BaseActivity {
         dijooFireBase.setAndroidContext(context);
         dijooFireBase = new Firebase("https://luminous-inferno-8047.firebaseio.com/");
         fbHandler = new FirebaseHandler(userID);
-        dbHandler = new DBHandler(HomeActivity.this);
         linearLayoutManager = new LinearLayoutManager(context);
 
         dijooRecBase = dijooFireBase.child("dijooUsers").child(userID);
@@ -73,14 +67,11 @@ public class HomeActivity extends BaseActivity {
         dijooPic = (RoundedImageView) findViewById(R.id.dijooPic);
         buildToolBar(toolbar);
         setFirebaseAdapter();
+        setDate();
 
 //        if (settings.getBoolean("my_first_time", true)) {
 //            settings.edit().putBoolean("my_first_time", false).commit();
 //        }
-
-        BaseActivity.database = BaseActivity.dbHandler.getReadableDatabase();
-        setAddDijooListener();
-        setDate();
     }
 
     private void setFirebaseAdapter() {
@@ -101,37 +92,10 @@ public class HomeActivity extends BaseActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    private void setAddDijooListener() {
-
-        addNewIcon = (ImageButton) findViewById(R.id.add_new_dijoo_button);
-
-        addNewIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, AddDijooFragment.class);
-                intent.putExtra("ID", userID);
-                startActivity(intent);
-            }
-        });
-
-    }
-
-
-
     private void setDate() {
 
         currentDate = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
     }
-
-//    public void loadDijooList() {
-//
-//        database = BaseActivity.dbHandler.getReadableDatabase();
-//        dijooArrayList = dbHandler.getDBDijoos(database);
-//        adapter = new DijooRecAdapter(dijooArrayList);
-//        recyclerView = (RecyclerView) findViewById(R.id.dijoo_list_view);
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//        recyclerView.setAdapter(adapter);
-//    }
 
      private void checkInDialog () {
         mStackLevel++;
@@ -169,5 +133,33 @@ public class HomeActivity extends BaseActivity {
         super.onDestroy();
         mAdapter.cleanup();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch(item.getItemId()){
+            case R.id.add_new_dijoo_icon:   //this item has your app icon
+                Intent intent = new Intent(HomeActivity.this, AddDijooFragment.class);
+                intent.putExtra("ID", userID);
+                startActivity(intent);
+                return true;
+
+//            case R.id.menu_item2:  //other menu items if you have any
+//                //add any action here
+//                return true;
+//
+//            case ... //do for all other menu items
+
+            default: return super.onOptionsItemSelected(item);
+        }
+    }
+
 
 }

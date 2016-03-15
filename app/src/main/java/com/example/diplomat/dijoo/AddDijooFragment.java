@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.example.diplomat.dijoo.db.DBContract;
-
 /**
  * Created by Diplomat on 1/23/2016.
  */
@@ -60,19 +58,6 @@ public class AddDijooFragment extends FragmentActivity {
                 newUnits = String.valueOf(editUnits.getSelectedItem());
 
                 Intent in = new Intent(AddDijooFragment.this, HomeActivity.class);
-                BaseActivity.database = BaseActivity.dbHandler.getReadableDatabase();
-
-
-                ContentValues values = new ContentValues();
-
-                values.clear();
-                values.put(DBContract.Columns.DIJOO_TITLE,newTitle);
-                values.put(DBContract.Columns.DIJOO_CATEGORY,newCategory);
-                values.put(DBContract.Columns.DIJOO_UNITS,newUnits);
-
-
-                Uri uri = DBContract.CONTENT_URI;
-                getApplicationContext().getContentResolver().insert(uri,values);
 
                 HomeActivity.fbHandler.addNewDijoo(BaseActivity.dijooFireBase, userID, newTitle, newCategory, newUnits);
                 startActivity(in);
