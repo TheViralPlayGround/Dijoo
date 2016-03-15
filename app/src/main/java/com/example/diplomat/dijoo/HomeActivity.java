@@ -11,12 +11,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.diplomat.dijoo.Stling.RoundedImageView;
+import com.example.diplomat.dijoo.Stling.SimpleDividerItemDecoration;
 import com.example.diplomat.dijoo.db.FirebaseHandler;
 import com.firebase.client.Firebase;
 import com.firebase.ui.FirebaseRecyclerAdapter;
@@ -68,6 +70,9 @@ public class HomeActivity extends BaseActivity {
         buildToolBar(toolbar);
         setFirebaseAdapter();
         setDate();
+        setOnClickForeRec();
+
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(context));
 
 //        if (settings.getBoolean("my_first_time", true)) {
 //            settings.edit().putBoolean("my_first_time", false).commit();
@@ -92,13 +97,30 @@ public class HomeActivity extends BaseActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
+    private void setOnClickForeRec (){
+
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(context, new RecyclerItemClickListener.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        checkInDialog(position);
+                    }
+                }));
+    }
+
+
+
     private void setDate() {
 
         currentDate = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
     }
 
-     private void checkInDialog () {
+     private void checkInDialog (int position) {
         mStackLevel++;
+
+         String pos = "" + position;
+         Log.d("Position in rec", pos);
 
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
@@ -120,11 +142,12 @@ public class HomeActivity extends BaseActivity {
 
         Resources resources = this.getResources();
         int white = resources.getColor(R.color.white);
-        int red = resources.getColor(R.color.material_light_blue_200);
-        toolbar.setTitle("List");
+        int black = resources.getColor(R.color.black);
         toolbar.setSubtitleTextColor(white);
         toolbar.setTitleTextColor(white);
-        toolbar.setBackgroundColor(red);
+        toolbar.setBackgroundColor(black);
+        toolbar.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
+
     }
 
 
@@ -150,12 +173,6 @@ public class HomeActivity extends BaseActivity {
                 intent.putExtra("ID", userID);
                 startActivity(intent);
                 return true;
-
-//            case R.id.menu_item2:  //other menu items if you have any
-//                //add any action here
-//                return true;
-//
-//            case ... //do for all other menu items
 
             default: return super.onOptionsItemSelected(item);
         }
