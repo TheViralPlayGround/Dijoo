@@ -3,6 +3,7 @@ package com.example.diplomat.dijoo;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -40,10 +41,10 @@ public class AddDijooFragment extends FragmentActivity {
 
         setContentView(R.layout.add_dijoo_layout);
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        buildToolBar(toolbar);
 
         editTitle = (EditText) findViewById(R.id.addTitleEditText);
         editCategory = (EditText) findViewById(R.id.addCategoryEditText);
-        editUnits = (Spinner) findViewById(R.id.addUnitsSpinner);
         addDijooButton = (Button) findViewById(R.id.add_submit_button);
 
         Intent intent = getIntent();
@@ -55,7 +56,6 @@ public class AddDijooFragment extends FragmentActivity {
 
                 newTitle = String.valueOf(editTitle.getText());
                 newCategory = String.valueOf(editCategory.getText());
-                newUnits = String.valueOf(editUnits.getSelectedItem());
 
                 Intent in = new Intent(AddDijooFragment.this, HomeActivity.class);
 
@@ -67,6 +67,20 @@ public class AddDijooFragment extends FragmentActivity {
 
 
 
+
+    }
+
+
+    private void buildToolBar(android.support.v7.widget.Toolbar toolbar) {
+
+        Resources resources = this.getResources();
+        int white = resources.getColor(R.color.white);
+        int black = resources.getColor(R.color.black);
+        toolbar.setSubtitleTextColor(white);
+        toolbar.setTitleTextColor(white);
+        toolbar.setBackgroundColor(black);
+        toolbar.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
+        toolbar.setTitle("Add new Dijoo");
 
     }
 }

@@ -28,7 +28,7 @@
 
     <style name="ToolbarMain" parent="Base.ThemeOverlay.AppCompat.ActionBar">
         <item name="android:textColorPrimary">#fff</item>
-        <item name="android:background">@color/material_light_blue_200</item>
+        <item name="android:background">@color/black</item>
     </style>
 
 
@@ -48,7 +48,7 @@
 
 
     <style name ="DijooPrimaryColor">
-        <item name="android:background">@color/material_light_blue_200</item>
+        <item name="android:background">@color/material_blue_grey_300</item>
     </style>
 
     <!-- Default application theme -->

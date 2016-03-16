@@ -7,23 +7,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.firebase.client.Firebase;
+
 /**
  * Created by Diplomat on 2/20/2016.
  */
 public class CheckInDialogFragment extends DialogFragment{
-    int mNum;
+
+    private static Firebase firebase;
+    private static int positionInRec;
 
     /**
      * Create a new instance of MyDialogFragment, providing "num"
      * as an argument.
      */
-    static CheckInDialogFragment newInstance(int num) {
+    static CheckInDialogFragment newInstance(int num, Firebase fb) {
         CheckInDialogFragment f = new CheckInDialogFragment();
 
         // Supply num input as an argument.
         Bundle args = new Bundle();
         args.putInt("num", num);
         f.setArguments(args);
+
+        firebase = fb;
+
 
         return f;
     }
@@ -32,6 +39,10 @@ public class CheckInDialogFragment extends DialogFragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Holo_Light);
+
+        positionInRec = getArguments().getInt("num");
+
+
     }
 
     @Override

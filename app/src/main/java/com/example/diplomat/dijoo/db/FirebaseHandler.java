@@ -1,6 +1,6 @@
 package com.example.diplomat.dijoo.db;
 
-import android.database.Cursor;
+import android.util.Log;
 
 import com.example.diplomat.dijoo.AnotherOne;
 import com.example.diplomat.dijoo.Dijoo;
@@ -11,9 +11,7 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -35,6 +33,7 @@ public class FirebaseHandler {
     final String DIJOO_CHECKIN_HEAD = "DijooCommits";
     String currentDate;
 
+    Dijoo allTitles;
 
     public FirebaseHandler (String userID){
         this.user_id = userID;
@@ -89,64 +88,27 @@ public class FirebaseHandler {
 
     }
 
+    public void getTitleAtPosition(int pos, Firebase fb, String userID){
 
-//
-//    public List<String> getDijooTitles(Firebase firebase, final String user_id  ){
-//
-//        final Firebase dijooBase = firebase;
-//
-//        dijooBase.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dijooSnapshot) {
-//
-//                Dijoo dijooArray =  dijooSnapshot.getValue(Dijoo.class);
-//                final long numofdbrows = dijooSnapshot.getChildrenCount();
-//
-//                final Query query = dijooBase.orderByChild(user_id);
-//
-//                query.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        for(int i = 0; i <numofdbrows; i++){
-//                            
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(FirebaseError firebaseError) {
-//
-//                    }
-//                });
-//
-//
-//
-//            }
-//            @Override
-//            public void onCancelled(FirebaseError firebaseError) {
-//            }
-//        });
-//
-//        List<Dijoo> dijooArray = new ArrayList<>();
-//
-//        String dTitle;
-//        String dCategory;
-//        String dUnits;
-//
-//        Cursor cursor = db.rawQuery("SELECT * FROM " + DIJOO_TABLE + ";", null);
-//        cursor.close();
-//
-//
-//        for(int i = 1; i<numofdbrows; i++) {
-//            dTitle = getDijooTitle(i, db);
-//            dCategory = getDijooCategory(i, db);
-//            dUnits = getDijooUnits(i, db);
-//
-//            dijooArray.add(new Dijoo(dTitle, dCategory, null, null));
-//        }
-//
-//
-//        return dijooArray;
-//
-//}
+        Firebase dijooFirebase = fb.child(DIJOO_USERS).child(userID);
+
+        Query query = dijooFirebase.orderByKey().startAt(pos).endAt(pos);
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                // do some stuff once
+
+                 allTitles = snapshot.getValue(Dijoo.class);
+                String title = allTitles.getDijooTitle();
+
+                Log.d("DiJOOs", title);
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+        });
 
     }
+
+}

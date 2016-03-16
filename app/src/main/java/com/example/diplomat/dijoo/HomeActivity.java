@@ -42,9 +42,7 @@ public class HomeActivity extends BaseActivity {
     LinearLayoutManager linearLayoutManager;
 
     String currentDate;
-    String userID = "NEW GGG";
-    int mStackLevel;
-
+    String userID = "jv";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,8 +115,6 @@ public class HomeActivity extends BaseActivity {
     }
 
      private void checkInDialog (int position) {
-        mStackLevel++;
-
          String pos = "" + position;
          Log.d("Position in rec", pos);
 
@@ -133,8 +129,9 @@ public class HomeActivity extends BaseActivity {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = CheckInDialogFragment.newInstance(mStackLevel);
+        DialogFragment newFragment = CheckInDialogFragment.newInstance(position, dijooFireBase);
         newFragment.show(ft, "dialog");
+
      }
 
 
@@ -172,6 +169,11 @@ public class HomeActivity extends BaseActivity {
                 Intent intent = new Intent(HomeActivity.this, AddDijooFragment.class);
                 intent.putExtra("ID", userID);
                 startActivity(intent);
+
+//                fbHandler.getTitleAtPosition(4, dijooFireBase, userID);
+
+
+
                 return true;
 
             default: return super.onOptionsItemSelected(item);

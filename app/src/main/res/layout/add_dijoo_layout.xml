@@ -11,8 +11,16 @@
         android:layout_height="?attr/actionBarSize"
         android:theme="@style/ToolbarMain"
         android:title="@string/app_name"
-        android:navigationIcon="@mipmap/ic_menu_white_24dp"
         />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="1"
+    android:orientation="vertical"
+    android:paddingTop="40dp"
+    android:paddingBottom="40dp"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_horizontal">
 
     <EditText
         android:layout_width="wrap_content"
@@ -35,28 +43,13 @@
         android:hint="@string/category"
         style="@android:style/Widget.EditText"
         android:padding="8dp"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editCategoryLabel"
         android:text="@string/category"
         android:padding="8dp"/>
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/title"
-        android:id="@+id/addUnitsSpinner"
-        android:padding="8dp"
-        android:entries="@array/dijooStringArray"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_title_label"
-        android:padding="8dp"
-        android:id="@+id/addUnitsLabel"
-        style="@android:style/Widget.TextView"
-        />
 
     <Button
         android:layout_width="wrap_content"
@@ -65,4 +58,5 @@
         android:text="@string/add_dijoo_button"/>
 
 
+</LinearLayout>
 </LinearLayout>
