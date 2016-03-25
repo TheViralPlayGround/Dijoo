@@ -9,6 +9,10 @@ public class AnotherOne {
     int valueString;
     String time;
 
+    public AnotherOne(){
+
+    }
+
     public AnotherOne (int valueString, String time, String date){
         this.valueString = valueString;
         this.time = time;
@@ -16,4 +20,27 @@ public class AnotherOne {
 
     }
 
+    public String getCommitDate() {
+        return commitDate;
+    }
+
+    public void setCommitDate(String commitDate) {
+        this.commitDate = commitDate;
+    }
+
+    public int getValueString() {
+        return valueString;
+    }
+
+    public void setValueString(int valueString) {
+        this.valueString = valueString;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 }

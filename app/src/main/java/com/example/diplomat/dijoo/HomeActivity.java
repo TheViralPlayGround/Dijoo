@@ -123,6 +123,8 @@ public class HomeActivity extends BaseActivity {
 
      private void checkInDialog (String key) {
 
+         Firebase fbref = dijooFireBase.child("dijooUsers").child(userID);
+
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
@@ -134,7 +136,7 @@ public class HomeActivity extends BaseActivity {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = CheckInDialogFragment.newInstance(key, dijooFireBase);
+        DialogFragment newFragment = CheckInDialogFragment.newInstance(key, fbref);
         newFragment.show(ft, "dialog");
 
      }

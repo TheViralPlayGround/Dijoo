@@ -68,7 +68,7 @@ public class CheckInDialogFragment extends DialogFragment{
 
                 int updateCount = Integer.parseInt(updateTxtField.getText().toString());
 
-                Firebase ref = firebase.child(key).child("checkIn").push();
+                Firebase ref = firebase.child(key).child("currentDate").push();
 
                 SimpleDateFormat date = new SimpleDateFormat("ddMMyyyy");
                 String currentDate = date.format(new Date());
