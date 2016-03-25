@@ -121,7 +121,7 @@ public class HomeActivity extends BaseActivity {
         currentDate = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
     }
 
-     private void checkInDialog (AnotherOne key) {
+     private void checkInDialog (String key) {
 
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
@@ -171,11 +171,11 @@ public class HomeActivity extends BaseActivity {
 
         switch(item.getItemId()){
             case R.id.add_new_dijoo_icon:   //this item has your app icon
-//                Intent intent = new Intent(HomeActivity.this, AddDijooFragment.class);
-//                intent.putExtra("ID", userID);
-//                startActivity(intent);
+                Intent intent = new Intent(HomeActivity.this, AddDijooFragment.class);
+                intent.putExtra("ID", userID);
+                startActivity(intent);
 
-                fbHandler.getDijooKeyOrder(dijooFireBase, userID);
+//                fbHandler.getDijooKeyOrder(dijooFireBase, userID);
 
 
 

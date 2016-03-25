@@ -11,6 +11,7 @@ import android.widget.EditText;
 import com.firebase.client.Firebase;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Diplomat on 2/20/2016.
@@ -67,12 +68,17 @@ public class CheckInDialogFragment extends DialogFragment{
 
                 int updateCount = Integer.parseInt(updateTxtField.getText().toString());
 
-                firebase.child(key).child("checkIn");
+                Firebase ref = firebase.child(key).child("checkIn").push();
 
-                String time = new SimpleDateFormat()
+                SimpleDateFormat date = new SimpleDateFormat("ddMMyyyy");
+                String currentDate = date.format(new Date());
 
-                AnotherOne anotherOne = new AnotherOne(updateCount, )
+                SimpleDateFormat time = new SimpleDateFormat("HHmmss");
+                String currentTime = time.format(new Date());
 
+                AnotherOne anotherOne = new AnotherOne(updateCount, currentTime, currentDate);
+
+                ref.setValue(anotherOne);
 
 
                 dismiss();

@@ -107,8 +107,6 @@ public class FirebaseHandler {
                 for (DataSnapshot dijooSnapshot : snapshot.getChildren()) {
                     allDijoos = (LinkedHashMap<String, Dijoo>) dijooSnapshot.getValue();
 
-                    for (LinkedHashMap<String, Dijoo> all)
-                   Set<String> one=  allDijoos.keySet();
 
                 }
             }

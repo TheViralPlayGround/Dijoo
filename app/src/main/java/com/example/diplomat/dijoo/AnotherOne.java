@@ -8,13 +8,11 @@ public class AnotherOne {
     String commitDate;
     int valueString;
     String time;
-    String units;
 
-
-    public AnotherOne (int valueString, String time, String units){
+    public AnotherOne (int valueString, String time, String date){
         this.valueString = valueString;
         this.time = time;
-        this.units = units;
+        this.commitDate = date;
 
     }
 
