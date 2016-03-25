@@ -9,10 +9,17 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.firebase.client.snapshot.KeyIndex;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Diplomat on 2/27/2016.
@@ -33,7 +40,7 @@ public class FirebaseHandler {
     final String DIJOO_CHECKIN_HEAD = "DijooCommits";
     String currentDate;
 
-    Dijoo allTitles;
+    LinkedHashMap<String, Dijoo> allDijoos;
 
     public FirebaseHandler (String userID){
         this.user_id = userID;
@@ -42,7 +49,7 @@ public class FirebaseHandler {
 
     public void addNewDijoo(Firebase firebase, String userID, String title, String category, String units) {
 
-        Firebase dijoo = firebase.child(DIJOO_USERS).child(userID).child(title);
+        Firebase dijoo = firebase.child(DIJOO_USERS).child(userID).push();
         Firebase nesss = dijoo.child(DIJOO_CHECKIN_HEAD);
 
        currentDate = new SimpleDateFormat("MMddyyyy", Locale.getDefault()).format(new Date());
@@ -88,27 +95,32 @@ public class FirebaseHandler {
 
     }
 
-    public void getTitleAtPosition(int pos, Firebase fb, String userID){
+    public void getDijooKeyOrder(Firebase fb, String userID){
 
         Firebase dijooFirebase = fb.child(DIJOO_USERS).child(userID);
 
-        Query query = dijooFirebase.orderByKey().startAt(pos).endAt(pos);
+        dijooFirebase.addValueEventListener(new ValueEventListener() {
 
-        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 // do some stuff once
+                for (DataSnapshot dijooSnapshot : snapshot.getChildren()) {
+                    allDijoos = (LinkedHashMap<String, Dijoo>) dijooSnapshot.getValue();
 
-                 allTitles = snapshot.getValue(Dijoo.class);
-                String title = allTitles.getDijooTitle();
+                    for (LinkedHashMap<String, Dijoo> all)
+                   Set<String> one=  allDijoos.keySet();
 
-                Log.d("DiJOOs", title);
+                }
             }
             @Override
             public void onCancelled(FirebaseError firebaseError) {
             }
-        });
+        }
+
+        );
 
     }
+
+
 
 }

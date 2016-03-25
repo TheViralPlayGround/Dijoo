@@ -25,6 +25,7 @@ import com.firebase.ui.FirebaseRecyclerAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 
 public class HomeActivity extends BaseActivity {
@@ -43,6 +44,9 @@ public class HomeActivity extends BaseActivity {
 
     String currentDate;
     String userID = "jv";
+
+    LinkedHashMap<String, Dijoo> allDijoos;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,12 +101,15 @@ public class HomeActivity extends BaseActivity {
 
     private void setOnClickForeRec (){
 
+
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(context, new RecyclerItemClickListener.OnItemClickListener() {
 
                     @Override
                     public void onItemClick(View view, int position) {
-                        checkInDialog(position);
+                        String key = mAdapter.getRef(position).getKey();
+
+                        checkInDialog(key);
                     }
                 }));
     }
@@ -114,9 +121,7 @@ public class HomeActivity extends BaseActivity {
         currentDate = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
     }
 
-     private void checkInDialog (int position) {
-         String pos = "" + position;
-         Log.d("Position in rec", pos);
+     private void checkInDialog (AnotherOne key) {
 
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
@@ -129,7 +134,7 @@ public class HomeActivity extends BaseActivity {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = CheckInDialogFragment.newInstance(position, dijooFireBase);
+        DialogFragment newFragment = CheckInDialogFragment.newInstance(key, dijooFireBase);
         newFragment.show(ft, "dialog");
 
      }
@@ -166,11 +171,11 @@ public class HomeActivity extends BaseActivity {
 
         switch(item.getItemId()){
             case R.id.add_new_dijoo_icon:   //this item has your app icon
-                Intent intent = new Intent(HomeActivity.this, AddDijooFragment.class);
-                intent.putExtra("ID", userID);
-                startActivity(intent);
+//                Intent intent = new Intent(HomeActivity.this, AddDijooFragment.class);
+//                intent.putExtra("ID", userID);
+//                startActivity(intent);
 
-//                fbHandler.getTitleAtPosition(4, dijooFireBase, userID);
+                fbHandler.getDijooKeyOrder(dijooFireBase, userID);
 
 
 

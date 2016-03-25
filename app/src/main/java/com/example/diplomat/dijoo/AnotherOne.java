@@ -15,6 +15,7 @@ public class AnotherOne {
         this.valueString = valueString;
         this.time = time;
         this.units = units;
+
     }
 
 }
