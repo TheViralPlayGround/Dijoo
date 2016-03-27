@@ -1,7 +1,5 @@
 package com.example.diplomat.dijoo.db;
 
-import android.util.Log;
-
 import com.example.diplomat.dijoo.AnotherOne;
 import com.example.diplomat.dijoo.Dijoo;
 import com.firebase.client.DataSnapshot;
@@ -9,17 +7,15 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
-import com.firebase.client.snapshot.KeyIndex;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 
 /**
  * Created by Diplomat on 2/27/2016.
@@ -28,19 +24,22 @@ import java.util.Set;
 
 public class FirebaseHandler {
 
-     String user_id;
-
-
+    String user_id;
     final String DIJOO_TABLE = "Dijoo";
     final String TITLE_COLUMN = "dijooTitle";
     final String CATEGORY_COLUMN = "dijooCategory";
     final String DIJOO_ID_COLUMN = "dijooID";
     final String UNITS_COLUMN = "dijooUnits";
     final String DIJOO_USERS = "dijooUsers";
+    final String DIJOO_ALL = "allDijoos";
     final String DIJOO_CHECKIN_HEAD = "DijooCommits";
-    String currentDate;
+    public int dijooDailyTotal;
+    ArrayList<Integer> allValues;
 
     LinkedHashMap<String, Dijoo> allDijoos;
+
+    public FirebaseHandler(){
+    }
 
     public FirebaseHandler (String userID){
         this.user_id = userID;
@@ -49,12 +48,11 @@ public class FirebaseHandler {
 
     public void addNewDijoo(Firebase firebase, String userID, String title, String category, String units) {
 
-        Firebase dijoo = firebase.child(DIJOO_USERS).child(userID).push();
-        Firebase nesss = dijoo.child(DIJOO_CHECKIN_HEAD);
+        Firebase dijoo = firebase.child(DIJOO_ALL).push();
 
-       currentDate = new SimpleDateFormat("MMddyyyy", Locale.getDefault()).format(new Date());
+        String  currentDate = new SimpleDateFormat("MMddyyyy", Locale.getDefault()).format(new Date());
 
-        Dijoo addNewDijoo = new Dijoo(currentDate, title, category, units);
+        Dijoo addNewDijoo = new Dijoo(userID,currentDate,title,category,units,0);
 
         dijoo.setValue(addNewDijoo);
     }
@@ -69,20 +67,6 @@ public class FirebaseHandler {
 
         return category;
 
-    }
-
-    public void checkInDijoo(Firebase firebase, String userID, int value, String title){
-
-        Firebase dijooFirebase = firebase.child(DIJOO_USERS).child(userID).child(title);
-
-        Firebase checkInHead = dijooFirebase.child(DIJOO_CHECKIN_HEAD);
-
-        currentDate = new SimpleDateFormat("MMddyyyy", Locale.getDefault()).format(new Date());
-        String currentTime = new SimpleDateFormat("HHmmss", Locale.getDefault()).format(new Date());
-
-        AnotherOne anotherOne = new AnotherOne(value,currentTime, "Feet");
-
-        checkInHead.child(currentDate).push().setValue(value);
     }
 
     public void getUnits(Firebase firebase, String userID, String title){
@@ -115,10 +99,57 @@ public class FirebaseHandler {
             }
         }
 
-        );
+        );}
+
+        public ArrayList<Integer> getDailyTotalForDijoo(final Firebase firebase, final String key){
+
+            final String today = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
+
+
+            Firebase ref = firebase.child("CheckIns");
+
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                        AnotherOne post = postSnapshot.getValue(AnotherOne.class);
+                        if(post.getItemKey().equals(key)  && post.getCommitDate().equals(today)){
+
+                            allValues.add(post.getValueString());
+
+                        }
+
+                    }
+                }
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                    System.out.println("The read failed: " + firebaseError.getMessage());
+                }
+            });
+
+            return allValues;
+
+        }
+
+        public void updateDailyTotals(Firebase fb, String key){
+
+        int newTotal = 0;
+        Firebase checkInRef = fb.child("CheckIns").child(key);
+
+        ArrayList<Integer> valueArray =  getDailyTotalForDijoo(fb, key);
+
+            for (int i= 0; i <valueArray.size(); i++){
+                newTotal = newTotal + valueArray.get(i);
+            }
+
+        Map<String, Object> dailyTotal = new HashMap<String, Object>();
+
+
+        dailyTotal.put("dijooDailyTotal", newTotal);
+    }
 
     }
 
 
 
-}
+

@@ -25,7 +25,6 @@ public class AddDijooFragment extends FragmentActivity {
     String newTitle;
     String newCategory;
     String newUnits;
-    Context context;
 
     String userID;
 

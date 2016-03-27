@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 public class HomeActivity extends BaseActivity {
 
@@ -62,23 +63,33 @@ public class HomeActivity extends BaseActivity {
         context = getApplicationContext();
         dijooFireBase.setAndroidContext(context);
         dijooFireBase = new Firebase("https://luminous-inferno-8047.firebaseio.com/");
-        fbHandler = new FirebaseHandler(userID);
+        fbHandler = new FirebaseHandler();
         linearLayoutManager = new LinearLayoutManager(context);
 
-        dijooRecBase = dijooFireBase.child("dijooUsers").child(userID);
+        dijooRecBase = dijooFireBase.child("allDijoos");
 
         dijooPic = new RoundedImageView(context);
         dijooPic = (RoundedImageView) findViewById(R.id.dijooPic);
         buildToolBar(toolbar);
+        updateDailyTotals(fbHandler);
         setFirebaseAdapter();
         setDate();
         setOnClickForeRec();
+
 
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(context));
 
 //        if (settings.getBoolean("my_first_time", true)) {
 //            settings.edit().putBoolean("my_first_time", false).commit();
 //        }
+    }
+
+    private void updateDailyTotals(FirebaseHandler fb) {
+
+
+
+        fb.updateDailyTotals(dijooFireBase, "-KDqTs0d1IS36UvCladH");
+
     }
 
     private void setFirebaseAdapter() {
@@ -92,7 +103,7 @@ public class HomeActivity extends BaseActivity {
 
                 viewHolder.dijooTitle.setText(dijoo.getDijooTitle());
                 viewHolder.dijooCategory.setText(dijoo.getDijooCategory());
-
+                viewHolder.dijooDailyTotal.setText("" + dijoo.getDijooDailyTotal());
             }
         };
 
@@ -123,7 +134,7 @@ public class HomeActivity extends BaseActivity {
 
      private void checkInDialog (String key) {
 
-         Firebase fbref = dijooFireBase.child("dijooUsers").child(userID);
+         Firebase fbref = dijooFireBase.child("CheckIns");
 
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing

@@ -68,7 +68,7 @@ public class CheckInDialogFragment extends DialogFragment{
 
                 int updateCount = Integer.parseInt(updateTxtField.getText().toString());
 
-                Firebase ref = firebase.child(key).child("currentDate").push();
+                Firebase ref = firebase.push();
 
                 SimpleDateFormat date = new SimpleDateFormat("ddMMyyyy");
                 String currentDate = date.format(new Date());
@@ -76,7 +76,7 @@ public class CheckInDialogFragment extends DialogFragment{
                 SimpleDateFormat time = new SimpleDateFormat("HHmmss");
                 String currentTime = time.format(new Date());
 
-                AnotherOne anotherOne = new AnotherOne(updateCount, currentTime, currentDate);
+                AnotherOne anotherOne = new AnotherOne(updateCount, currentTime, currentDate, key);
 
                 ref.setValue(anotherOne);
 

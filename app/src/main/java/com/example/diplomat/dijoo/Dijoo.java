@@ -11,37 +11,34 @@ public class Dijoo {
     public String dijooCategory;
     public String dijooUnits;
     public String dijooCreationDate;
+    public String dijooUser;
+    public String dijOOtest;
+    public int dijooDailyTotal;
     public int dijooPic;
     public static ArrayList<Dijoo> newDijoo = new ArrayList<>();
 
-    public Dijoo (){
-    }
-
-    public  Dijoo (String currentDate, String dijooTitle, String category, String units){
+    public  Dijoo (String dijooUser, String currentDate, String dijooTitle, String category, String units, int dailyTotal){
+        this.dijooUser = dijooUser;
         this.dijooTitle = dijooTitle;
         this.dijooCategory = category;
         this.dijooUnits = units;
         this.dijooCreationDate = currentDate;
+        this.dijooDailyTotal = dailyTotal;
     }
 
-    public Dijoo (String title, String count, int dijooPic){
-        this.dijooTitle = title;
-        this.dijooCategory = count;
-        this.dijooPic = dijooPic;
-    }
-
+    public Dijoo(){}
 
     public static ArrayList<Dijoo> getUsers(int numUsers) {
         ArrayList<Dijoo> users = new ArrayList<Dijoo>();
 
         for(int i = 0; i <numUsers; i++)
-        users.add(new Dijoo("Dijoo Item Title", "Dijoo Item Category", null, null));
+        users.add(new Dijoo("Dijoo User", "Dijoo Item Title", "Dijoo Item Category", null, null, 0));
         return users;
     }
 
-    public static ArrayList<Dijoo> addDijoo(String title, String category, String units, String location){
+    public static ArrayList<Dijoo> addDijoo(String dijooUser, String title, String category, String units, String location){
 
-        newDijoo.add(new Dijoo(title, category, units, location));
+        newDijoo.add(new Dijoo(dijooUser, title, category, units, location, 0));
         return newDijoo;
 
     }
@@ -85,4 +82,15 @@ public class Dijoo {
     public void setDijooPic(int dijooPic) {
         this.dijooPic = dijooPic;
     }
+
+    public String getDijooUser(){return dijooUser;}
+
+    public int getDijooDailyTotal() {
+        return dijooDailyTotal;
+    }
+
+    public void setDijooDailyTotal(int dijooDailyTotal) {
+        this.dijooDailyTotal = dijooDailyTotal;
+    }
+
 }

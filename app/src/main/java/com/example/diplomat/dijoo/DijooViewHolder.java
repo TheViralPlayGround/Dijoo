@@ -12,12 +12,14 @@ public class DijooViewHolder extends RecyclerView.ViewHolder {
 
     TextView dijooTitle;
     TextView dijooCategory;
+    TextView dijooDailyTotal;
 
     public DijooViewHolder (android.view.View itemView){
         super(itemView);
 
         dijooTitle = (TextView) itemView.findViewById(R.id.dijooItemTitle);
         dijooCategory = (TextView) itemView.findViewById(R.id.dijooItemCategory);
+        dijooDailyTotal = (TextView) itemView.findViewById(R.id.total_count);
     }
 
 
