@@ -34,7 +34,7 @@ public class FirebaseHandler {
     final String DIJOO_ALL = "allDijoos";
     final String DIJOO_CHECKIN_HEAD = "DijooCommits";
     public int dijooDailyTotal;
-    ArrayList<Integer> allValues;
+    ArrayList<Integer> allValues = new ArrayList<Integer>();
 
     LinkedHashMap<String, Dijoo> allDijoos;
 
@@ -101,52 +101,67 @@ public class FirebaseHandler {
 
         );}
 
-        public ArrayList<Integer> getDailyTotalForDijoo(final Firebase firebase, final String key){
-
-            final String today = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
+    public void getDailyTotalForDijoo(final Firebase firebase, final String key){
 
 
-            Firebase ref = firebase.child("CheckIns");
+            final String upDatingKey = key;
+            final Firebase refDij = firebase.child(DIJOO_ALL).child(key);
+                  Firebase ref = firebase.child("CheckIns");
 
-            ref.addValueEventListener(new ValueEventListener() {
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                        AnotherOne post = postSnapshot.getValue(AnotherOne.class);
-                        if(post.getItemKey().equals(key)  && post.getCommitDate().equals(today)){
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot checkInSnapshot : dataSnapshot.getChildren()) {
+                        AnotherOne checkIn = checkInSnapshot.getValue(AnotherOne.class);
 
-                            allValues.add(post.getValueString());
+                        String today = new SimpleDateFormat("ddMMyyyy", Locale.getDefault()).format(new Date());
+                        if (Objects.equals(checkIn.getItemKey(), upDatingKey)  && Objects.equals(checkIn.getCommitDate(), today) ) {
+                            int value = checkIn.getValueString();
+                            allValues.add(value);
 
                         }
-
                     }
+
+
+                    int addEmUp = 0;
+                    int numberOfRecords = allValues.size();
+                    for(int i = 0; i<numberOfRecords; i++) {
+                        addEmUp = addEmUp + allValues.get(i);
+                    }
+
+                    Map<String, Object> dailyTotal = new HashMap<String, Object>();
+                    dailyTotal.put("dijooDailyTotal", addEmUp);
+
+                    refDij.updateChildren(dailyTotal);
                 }
                 @Override
                 public void onCancelled(FirebaseError firebaseError) {
                     System.out.println("The read failed: " + firebaseError.getMessage());
                 }
-            });
 
-            return allValues;
+
+
+
+            });
 
         }
 
-        public void updateDailyTotals(Firebase fb, String key){
-
-        int newTotal = 0;
-        Firebase checkInRef = fb.child("CheckIns").child(key);
-
-        ArrayList<Integer> valueArray =  getDailyTotalForDijoo(fb, key);
-
-            for (int i= 0; i <valueArray.size(); i++){
-                newTotal = newTotal + valueArray.get(i);
-            }
-
-        Map<String, Object> dailyTotal = new HashMap<String, Object>();
-
-
-        dailyTotal.put("dijooDailyTotal", newTotal);
-    }
+//        public void updateDailyTotals(Firebase fb, String key){
+//
+//        int newTotal = 0;
+//        Firebase checkInRef = fb.child("CheckIns").child(key);
+//
+//        int valueArray =  getDailyTotalForDijoo(fb, key);
+//
+////            for (int i= 0; i <valueArray.size(); i++){
+//                newTotal = newTotal + valueArray;
+////            }
+//
+//        Map<String, Object> dailyTotal = new HashMap<String, Object>();
+//
+//
+//        dailyTotal.put("dijooDailyTotal", newTotal);
+//    }
 
     }
 

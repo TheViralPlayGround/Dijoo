@@ -19,6 +19,7 @@ import java.util.Date;
 public class CheckInDialogFragment extends DialogFragment{
 
     private static Firebase firebase;
+    private static Firebase allFirebase;
     private static String key;
 
     /**
@@ -33,7 +34,8 @@ public class CheckInDialogFragment extends DialogFragment{
         args.putString("key", key);
         f.setArguments(args);
 
-        firebase = fb;
+        firebase = fb.child("CheckIns");
+        allFirebase = fb;
 
 
         return f;
@@ -80,7 +82,7 @@ public class CheckInDialogFragment extends DialogFragment{
 
                 ref.setValue(anotherOne);
 
-
+                HomeActivity.fbHandler.getDailyTotalForDijoo(allFirebase, key);
                 dismiss();
 
             }

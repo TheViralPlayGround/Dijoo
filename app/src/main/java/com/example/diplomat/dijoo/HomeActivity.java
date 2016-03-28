@@ -71,7 +71,6 @@ public class HomeActivity extends BaseActivity {
         dijooPic = new RoundedImageView(context);
         dijooPic = (RoundedImageView) findViewById(R.id.dijooPic);
         buildToolBar(toolbar);
-        updateDailyTotals(fbHandler);
         setFirebaseAdapter();
         setDate();
         setOnClickForeRec();
@@ -86,17 +85,14 @@ public class HomeActivity extends BaseActivity {
 
     private void updateDailyTotals(FirebaseHandler fb) {
 
-
-
-        fb.updateDailyTotals(dijooFireBase, "-KDqTs0d1IS36UvCladH");
+        fb.getDailyTotalForDijoo(dijooFireBase, "-KDqTs0d1IS36UvCladH");
 
     }
 
-    private void setFirebaseAdapter() {
+    public void setFirebaseAdapter() {
 
         recyclerView = (RecyclerView) findViewById(R.id.dijoo_list_view);
         recyclerView.setLayoutManager(linearLayoutManager);
-
         mAdapter = new FirebaseRecyclerAdapter<Dijoo, DijooViewHolder>(Dijoo.class, R.layout.dijoo_item_layout, DijooViewHolder.class, dijooRecBase) {
             @Override
             protected void populateViewHolder(DijooViewHolder viewHolder, Dijoo dijoo, int position) {
@@ -106,7 +102,6 @@ public class HomeActivity extends BaseActivity {
                 viewHolder.dijooDailyTotal.setText("" + dijoo.getDijooDailyTotal());
             }
         };
-
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -134,7 +129,7 @@ public class HomeActivity extends BaseActivity {
 
      private void checkInDialog (String key) {
 
-         Firebase fbref = dijooFireBase.child("CheckIns");
+         Firebase fbref = dijooFireBase;
 
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
@@ -198,5 +193,9 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
 }
