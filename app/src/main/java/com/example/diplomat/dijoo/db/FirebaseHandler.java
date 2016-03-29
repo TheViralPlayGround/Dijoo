@@ -2,11 +2,13 @@ package com.example.diplomat.dijoo.db;
 
 import com.example.diplomat.dijoo.AnotherOne;
 import com.example.diplomat.dijoo.Dijoo;
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.firebase.client.snapshot.IndexedNode;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -115,17 +117,16 @@ public class FirebaseHandler {
                         AnotherOne checkIn = checkInSnapshot.getValue(AnotherOne.class);
 
                         String today = new SimpleDateFormat("ddMMyyyy", Locale.getDefault()).format(new Date());
-                        if (Objects.equals(checkIn.getItemKey(), upDatingKey)  && Objects.equals(checkIn.getCommitDate(), today) ) {
+                        if (Objects.equals(checkIn.getItemKey(), upDatingKey) && Objects.equals(checkIn.getCommitDate(), today)) {
                             int value = checkIn.getValueString();
                             allValues.add(value);
 
                         }
                     }
 
-
                     int addEmUp = 0;
                     int numberOfRecords = allValues.size();
-                    for(int i = 0; i<numberOfRecords; i++) {
+                    for (int i = 0; i < numberOfRecords; i++) {
                         addEmUp = addEmUp + allValues.get(i);
                     }
 
@@ -134,18 +135,55 @@ public class FirebaseHandler {
 
                     refDij.updateChildren(dailyTotal);
                 }
+
                 @Override
                 public void onCancelled(FirebaseError firebaseError) {
                     System.out.println("The read failed: " + firebaseError.getMessage());
                 }
 
 
-
-
             });
 
         }
 
+    public void getAllChildKeys(final Firebase fb, String node) {
+
+        final Firebase ref = fb.child(node);
+
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            // Retrieve new posts as they are added to the database
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot checkInSnapshot : snapshot.getChildren()) {
+                    String allKeys = checkInSnapshot.getKey();
+
+                    setDailyToZero(ref, allKeys);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+
+
+        });
+
+    }
+
+    public void setDailyToZero(Firebase fb , String key){
+
+        Map<String, Object> today = new HashMap<>();
+        String day = new SimpleDateFormat("MMddyyyy", Locale.getDefault()).format(new Date());
+
+        Firebase ref = fb.child(key);
+        today.put("currentDate", day);
+        ref.updateChildren(today);
+
+
+
+
+    }
 //        public void updateDailyTotals(Firebase fb, String key){
 //
 //        int newTotal = 0;

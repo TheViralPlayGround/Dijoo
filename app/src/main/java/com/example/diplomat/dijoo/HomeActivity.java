@@ -24,6 +24,7 @@ import com.firebase.client.Firebase;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -74,7 +75,9 @@ public class HomeActivity extends BaseActivity {
         setFirebaseAdapter();
         setDate();
         setOnClickForeRec();
+        fbHandler.getAllChildKeys(dijooFireBase, "allDijoos");
 
+//        setDailyValuesToZero(dijooFireBase, fbHandler,allKeysForDijoos);
 
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(context));
 
@@ -83,10 +86,20 @@ public class HomeActivity extends BaseActivity {
 //        }
     }
 
-    private void updateDailyTotals(FirebaseHandler fb) {
+    private void setDailyValuesToZero(Firebase fb, FirebaseHandler fbHandler, ArrayList<String> allKeys){
+        ArrayList<String> KK;
+            KK = allKeys;
+        Firebase ref = fb.child("allDijoos");
+        for(int i = 0; i <KK.size(); i++) {
+            fbHandler.setDailyToZero(ref,allKeys.get(i));
+        }
+    }
 
-        fb.getDailyTotalForDijoo(dijooFireBase, "-KDqTs0d1IS36UvCladH");
+    private void updateDailyTotals(FirebaseHandler fb, ArrayList<String> allKeys) {
 
+        for (int i = 0; i<allKeys.size(); i++) {
+            fb.getDailyTotalForDijoo(dijooFireBase, allKeys.get(i));
+        }
     }
 
     public void setFirebaseAdapter() {
