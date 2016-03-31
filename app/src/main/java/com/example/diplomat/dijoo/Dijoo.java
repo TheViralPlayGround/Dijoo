@@ -12,36 +12,22 @@ public class Dijoo {
     public String dijooUnits;
     public String dijooCreationDate;
     public String dijooUser;
-    public String dijOOtest;
+    public String dijooToday;
     public int dijooDailyTotal;
     public int dijooPic;
     public static ArrayList<Dijoo> newDijoo = new ArrayList<>();
 
-    public  Dijoo (String dijooUser, String currentDate, String dijooTitle, String category, String units, int dailyTotal){
+    public  Dijoo (String dijooUser, String dijooCreationDate, String dijooTitle, String category, String units, String dijooToday, int dailyTotal){
         this.dijooUser = dijooUser;
         this.dijooTitle = dijooTitle;
         this.dijooCategory = category;
         this.dijooUnits = units;
-        this.dijooCreationDate = currentDate;
+        this.dijooCreationDate = dijooCreationDate;
+        this.dijooToday = dijooToday;
         this.dijooDailyTotal = dailyTotal;
     }
 
     public Dijoo(){}
-
-    public static ArrayList<Dijoo> getUsers(int numUsers) {
-        ArrayList<Dijoo> users = new ArrayList<Dijoo>();
-
-        for(int i = 0; i <numUsers; i++)
-        users.add(new Dijoo("Dijoo User", "Dijoo Item Title", "Dijoo Item Category", null, null, 0));
-        return users;
-    }
-
-    public static ArrayList<Dijoo> addDijoo(String dijooUser, String title, String category, String units, String location){
-
-        newDijoo.add(new Dijoo(dijooUser, title, category, units, location, 0));
-        return newDijoo;
-
-    }
 
     public String getDijooTitle() {
         return dijooTitle;
@@ -59,6 +45,14 @@ public class Dijoo {
         this.dijooCategory = dijooCategory;
     }
 
+    public String getDijooCreationDate() {
+        return dijooCreationDate;
+    }
+
+    public void setDijooCreationDate(String dijooCreationDate) {
+        this.dijooCreationDate = dijooCreationDate;
+    }
+
     public String getDijooUnits() {
         return dijooUnits;
     }
@@ -67,12 +61,20 @@ public class Dijoo {
         this.dijooUnits = dijooUnits;
     }
 
-    public String getCurrentDate() {
-        return dijooCreationDate;
+    public String getDijooUser() {
+        return dijooUser;
     }
 
-    public void setCurrentDate(String currentDate) {
-        this.dijooCreationDate = currentDate;
+    public void setDijooUser(String dijooUser) {
+        this.dijooUser = dijooUser;
+    }
+
+    public int getDijooDailyTotal() {
+        return dijooDailyTotal;
+    }
+
+    public void setDijooDailyTotal(int dijooDailyTotal) {
+        this.dijooDailyTotal = dijooDailyTotal;
     }
 
     public int getDijooPic() {
@@ -83,14 +85,12 @@ public class Dijoo {
         this.dijooPic = dijooPic;
     }
 
-    public String getDijooUser(){return dijooUser;}
-
-    public int getDijooDailyTotal() {
-        return dijooDailyTotal;
+    public String getDijooToday() {
+        return dijooToday;
     }
 
-    public void setDijooDailyTotal(int dijooDailyTotal) {
-        this.dijooDailyTotal = dijooDailyTotal;
+    public void setDijooToday(String dijooToday) {
+        this.dijooToday = dijooToday;
     }
 
 }

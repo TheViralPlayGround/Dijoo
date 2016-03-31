@@ -1,6 +1,5 @@
 package com.example.diplomat.dijoo;
 
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -10,8 +9,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,12 +20,8 @@ import com.example.diplomat.dijoo.db.FirebaseHandler;
 import com.firebase.client.Firebase;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Objects;
 
 public class HomeActivity extends BaseActivity {
 
@@ -43,8 +36,6 @@ public class HomeActivity extends BaseActivity {
     FragmentManager fm;
 
     LinearLayoutManager linearLayoutManager;
-
-    String currentDate;
     String userID = "jv";
 
     LinkedHashMap<String, Dijoo> allDijoos;
@@ -73,7 +64,6 @@ public class HomeActivity extends BaseActivity {
         dijooPic = (RoundedImageView) findViewById(R.id.dijooPic);
         buildToolBar(toolbar);
         setFirebaseAdapter();
-        setDate();
         setOnClickForeRec();
         fbHandler.getAllChildKeys(dijooFireBase, "allDijoos");
 
@@ -133,13 +123,6 @@ public class HomeActivity extends BaseActivity {
                 }));
     }
 
-
-
-    private void setDate() {
-
-        currentDate = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(new Date());
-    }
-
      private void checkInDialog (String key) {
 
          Firebase fbref = dijooFireBase;
@@ -155,7 +138,7 @@ public class HomeActivity extends BaseActivity {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = CheckInDialogFragment.newInstance(key, fbref);
+        CheckInDialogFragment newFragment = CheckInDialogFragment.newInstance(key, fbref);
         newFragment.show(ft, "dialog");
 
      }
