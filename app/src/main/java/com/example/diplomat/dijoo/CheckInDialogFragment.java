@@ -60,6 +60,7 @@ public class CheckInDialogFragment extends DialogFragment{
         // Watch for button clicks.
         Button updateButton = (Button)v.findViewById(R.id.update_button);
         Button cancelButton = (Button)v.findViewById(R.id.cancel_button);
+        Button deleteButton = (Button)v.findViewById(R.id.delete_dijoo_button);
         final EditText updateTxtField = (EditText)v.findViewById(R.id.update_count_edit_Text) ;
 
 
@@ -93,6 +94,14 @@ public class CheckInDialogFragment extends DialogFragment{
                 // When button is clicked, call up to owning activity.
                 dismiss();
 
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomeActivity.fbHandler.deleteDijoo(allFirebase, key);
+                dismiss();
             }
         });
 

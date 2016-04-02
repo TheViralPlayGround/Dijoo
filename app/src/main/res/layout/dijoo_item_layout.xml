@@ -1,86 +1,100 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="72dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:weightSum="10"
-    android:padding="8dp"
+    android:weightSum="8"
+    android:padding="16dp">
 
-    >
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="72dp"
+    <RelativeLayout
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_weight="2"
+
         >
 
-        <com.example.diplomat.dijoo.Stling.RoundedImageView
+        <ImageView
+            android:id="@+id/dijoo_list_item_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/total"
-            android:src="@mipmap/ic_smoke_free_black_24dp"
-            android:id="@+id/dijooPic"
-            android:paddingRight="8dp"/>
-    </LinearLayout>
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/dijoo_title_letter"
+            android:adjustViewBounds="true"
+            android:background="@drawable/dijoo_circle"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text=""
+            android:textAllCaps="true"
+            android:textColor="@color/material_green_50"
+            android:textSize="32sp"
+
+            />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="72dp"
+        android:layout_weight="7"
         android:orientation="vertical"
-        android:layout_weight="6"
-        android:paddingLeft="8dp"
-
+        android:paddingStart="16dp"
+        android:paddingEnd="8dp"
         >
 
-    <TextView
-        android:id="@+id/dijooItemTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/default_title"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:layout_weight="6"
-        />
-
-    <TextView
-        android:id="@+id/dijooItemCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/default_subtitle"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:layout_weight="6"
-        />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:orientation="vertical">
-
         <TextView
+            android:id="@+id/dijooItemTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/total_count_label"
-            android:text="@string/total"
-            android:layout_gravity="center_horizontal"
-            android:textSize="15sp"
+            android:text="@string/default_title"
             android:textColor="@color/black"
-
+            android:textSize="16sp"
             />
 
         <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_vertical"
-        android:text="-"
-        android:id="@+id/total_count"
-        />
-        </LinearLayout>
+            android:id="@+id/dijooItemCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/default_subtitle"
+            android:textSize="14sp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/units_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Times"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"
+            android:textSize="12sp"
+            android:maxLines="1"
+            />
+
+
+        <TextView
+            android:id="@+id/total_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_gravity="center_horizontal"
+            android:textSize="16sp"
+            />
+
+    </LinearLayout>
 
 
 </LinearLayout>

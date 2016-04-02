@@ -13,8 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
-import com.example.diplomat.dijoo.Stling.RoundedImageView;
 import com.example.diplomat.dijoo.Stling.SimpleDividerItemDecoration;
 import com.example.diplomat.dijoo.db.FirebaseHandler;
 import com.firebase.client.Firebase;
@@ -29,7 +29,7 @@ public class HomeActivity extends BaseActivity {
     BaseActivity mBaseActivity;
     SharedPreferences settings;
     ImageButton addNewIcon;
-    RoundedImageView dijooPic;
+    ImageView dijooListImage;
     FirebaseRecyclerAdapter mAdapter;
     Firebase dijooRecBase;
 
@@ -59,9 +59,7 @@ public class HomeActivity extends BaseActivity {
         linearLayoutManager = new LinearLayoutManager(context);
 
         dijooRecBase = dijooFireBase.child("allDijoos");
-
-        dijooPic = new RoundedImageView(context);
-        dijooPic = (RoundedImageView) findViewById(R.id.dijooPic);
+        dijooListImage = (ImageView) findViewById(R.id.dijoo_list_item_image);
         buildToolBar(toolbar);
         setFirebaseAdapter();
         setOnClickForeRec();
@@ -96,13 +94,18 @@ public class HomeActivity extends BaseActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.dijoo_list_view);
         recyclerView.setLayoutManager(linearLayoutManager);
-        mAdapter = new FirebaseRecyclerAdapter<Dijoo, DijooViewHolder>(Dijoo.class, R.layout.dijoo_item_layout, DijooViewHolder.class, dijooRecBase) {
+        mAdapter = new FirebaseRecyclerAdapter<Dijoo, DijooViewHolder>(Dijoo.class, R.layout.dijoo_item_layout, DijooViewHolder.class, dijooRecBase.orderByChild("dijooTitle")) {
+
+
+
             @Override
             protected void populateViewHolder(DijooViewHolder viewHolder, Dijoo dijoo, int position) {
 
                 viewHolder.dijooTitle.setText(dijoo.getDijooTitle());
                 viewHolder.dijooCategory.setText(dijoo.getDijooCategory());
                 viewHolder.dijooDailyTotal.setText("" + dijoo.getDijooDailyTotal());
+                viewHolder.dijooListItemLetter.setText(dijoo.getDijooTitle().substring(0,1));
+                viewHolder.dijooUnits.setText(dijoo.getDijooUnits());
             }
         };
         recyclerView.setAdapter(mAdapter);
@@ -148,12 +151,11 @@ public class HomeActivity extends BaseActivity {
 
         Resources resources = this.getResources();
         int white = resources.getColor(R.color.white);
-        int black = resources.getColor(R.color.black);
+        int blue = resources.getColor(R.color.material_blue_700);
         toolbar.setSubtitleTextColor(white);
         toolbar.setTitleTextColor(white);
-        toolbar.setBackgroundColor(black);
+        toolbar.setBackgroundColor(blue);
         toolbar.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
-
     }
 
 

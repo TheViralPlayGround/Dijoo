@@ -14,10 +14,10 @@ public class Dijoo {
     public String dijooUser;
     public String dijooToday;
     public int dijooDailyTotal;
-    public int dijooPic;
+    public int dijooOverallTotal;
     public static ArrayList<Dijoo> newDijoo = new ArrayList<>();
 
-    public  Dijoo (String dijooUser, String dijooCreationDate, String dijooTitle, String category, String units, String dijooToday, int dailyTotal){
+    public  Dijoo (String dijooUser, String dijooCreationDate, String dijooTitle, String category, String units, String dijooToday, int dailyTotal, int dijooOverallTotal){
         this.dijooUser = dijooUser;
         this.dijooTitle = dijooTitle;
         this.dijooCategory = category;
@@ -25,6 +25,7 @@ public class Dijoo {
         this.dijooCreationDate = dijooCreationDate;
         this.dijooToday = dijooToday;
         this.dijooDailyTotal = dailyTotal;
+        this.dijooOverallTotal = dijooOverallTotal;
     }
 
     public Dijoo(){}
@@ -75,14 +76,6 @@ public class Dijoo {
 
     public void setDijooDailyTotal(int dijooDailyTotal) {
         this.dijooDailyTotal = dijooDailyTotal;
-    }
-
-    public int getDijooPic() {
-        return dijooPic;
-    }
-
-    public void setDijooPic(int dijooPic) {
-        this.dijooPic = dijooPic;
     }
 
     public String getDijooToday() {
