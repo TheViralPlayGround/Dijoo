@@ -26,8 +26,7 @@ public class AddDijooFragment extends FragmentActivity {
     String emptyField = "Field cannot be empty";
 
 
-
-    public AddDijooFragment(){
+    public AddDijooFragment() {
 
     }
 
@@ -48,34 +47,30 @@ public class AddDijooFragment extends FragmentActivity {
         addDijooButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(editTitle.getText().toString().length()<1){
+                if (editTitle.getText().toString().length() < 1) {
                     editTitle.setError(emptyField);
-                }
-                else if (editCategory.getText().toString().length() <1 ){
+                } else if (editCategory.getText().toString().length() < 1) {
                     editCategory.setError(emptyField);
-                }
-                else if (editUnits.getText().toString().length()<1){
+                } else if (editUnits.getText().toString().length() < 1) {
                     editUnits.setError(emptyField);
-                }
-                else if
-                    (editUnits.getText().toString().length() > 14) {
-                        editUnits.setError("Field must be less than 14 characters");                }
-                else {
+                } else if
+                        (editUnits.getText().toString().length() > 14) {
+                    editUnits.setError("Field must be less than 14 characters");
+                } else {
 
-                newTitle = String.valueOf(editTitle.getText());
-                newCategory = String.valueOf(editCategory.getText());
-                newUnits = String.valueOf(editUnits.getText());
+                    newTitle = String.valueOf(editTitle.getText());
+                    newCategory = String.valueOf(editCategory.getText());
+                    newUnits = String.valueOf(editUnits.getText());
 
-                Intent in = new Intent(AddDijooFragment.this, HomeActivity.class);
+                    Intent in = new Intent(AddDijooFragment.this, HomeActivity.class);
 
-                HomeActivity.fbHandler.addNewDijoo(BaseActivity.dijooFireBase, userID, newTitle, newCategory, newUnits);
+                    HomeActivity.fbHandler.addNewDijoo(BaseActivity.dijooFireBase, userID, newTitle, newCategory, newUnits);
                     onFragmentSuicide("AddDijooFragment");
-                startActivity(in);
+                    startActivity(in);
 
-            }}
+                }
+            }
         });
-
-
 
 
     }

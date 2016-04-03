@@ -151,7 +151,7 @@ public class HomeActivity extends BaseActivity {
 
         Resources resources = this.getResources();
         int white = resources.getColor(R.color.white);
-        int blue = resources.getColor(R.color.material_blue_700);
+        int blue = resources.getColor(R.color.main_color_grey_900);
         toolbar.setSubtitleTextColor(white);
         toolbar.setTitleTextColor(white);
         toolbar.setBackgroundColor(blue);
