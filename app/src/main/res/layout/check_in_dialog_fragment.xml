@@ -10,18 +10,26 @@
         android:layout_height="wrap_content"
         android:id="@+id/checkin_header"
         android:text="Check-in: "
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="20dp"/>
+        android:gravity="center_horizontal"
+        android:paddingBottom="20dp"
+        />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/update_count_edit_Text"
         android:inputType="number"
-        android:hint="How many do you want to add?"/>
+        android:hint="How many do you want to add?"
+        android:gravity="center_horizontal"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/delete_dijoo_button"
+            android:text="Delete"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -32,11 +40,6 @@
             android:layout_height="match_parent"
             android:id="@+id/update_button"
             android:text="Submit"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/delete_dijoo_button"
-            android:text="Delete"/>
     </LinearLayout>
 
 </LinearLayout>

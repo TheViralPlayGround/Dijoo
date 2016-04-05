@@ -179,7 +179,7 @@ public class FirebaseHandler {
     public void setDailyToZero(Firebase fb, String key) {
 
         Map<String, Object> today = new HashMap<>();
-        ;
+
         String day = new SimpleDateFormat("MMddyyyy", Locale.getDefault()).format(new Date());
 
         Firebase ref = fb.child(key);
@@ -212,6 +212,33 @@ public class FirebaseHandler {
             }
         });
             ref.removeValue();
+    }
+
+    public void addUpdateToOverallTotal(Firebase allFirebase, final String key, int updateCount) {
+
+        final String k = "" + key;
+        final int checkIn = updateCount;
+        final Firebase ref = allFirebase.child(DIJOO_ALL).child(k);
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int  updateCount = dataSnapshot.getValue(Dijoo.class).getDijooOverallTotal() + checkIn;
+
+                Map<String, Object> overallTotal = new HashMap<String, Object>();
+                overallTotal.put("dijooOverallTotal", updateCount);
+                ref.updateChildren(overallTotal);
+
+                ref.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
     }
 //        public void updateDailyTotals(Firebase fb, String key){
 //

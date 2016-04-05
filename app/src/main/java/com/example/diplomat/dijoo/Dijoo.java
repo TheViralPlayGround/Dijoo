@@ -86,4 +86,11 @@ public class Dijoo {
         this.dijooToday = dijooToday;
     }
 
+    public int getDijooOverallTotal() {
+        return dijooOverallTotal;
+    }
+
+    public void setDijooOverallTotal(int dijooOverallTotal) {
+        this.dijooOverallTotal = dijooOverallTotal;
+    }
 }

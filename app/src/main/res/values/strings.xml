@@ -10,6 +10,7 @@
     <string name="select_unit">How do you want to track?</string>
     <string name="add_dijoo_button">Add New Dijoo</string>
     <string name="location">Location</string>
+    <string name="add">Add</string>
 
     <string-array name="unitsArray">
         <item>Minutes</item>

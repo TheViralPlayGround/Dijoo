@@ -3,7 +3,6 @@ package com.example.diplomat.dijoo;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -39,6 +38,8 @@ public class HomeActivity extends BaseActivity {
     String userID = "jv";
 
     LinkedHashMap<String, Dijoo> allDijoos;
+    private static final int CONTENT_VIEW_ID = 10101010;
+
 
 
     @Override
@@ -151,7 +152,7 @@ public class HomeActivity extends BaseActivity {
 
         Resources resources = this.getResources();
         int white = resources.getColor(R.color.white);
-        int blue = resources.getColor(R.color.main_color_grey_900);
+        int blue = resources.getColor(R.color.material_green_200);
         toolbar.setSubtitleTextColor(white);
         toolbar.setTitleTextColor(white);
         toolbar.setBackgroundColor(blue);
@@ -177,13 +178,16 @@ public class HomeActivity extends BaseActivity {
 
         switch(item.getItemId()){
             case R.id.add_new_dijoo_icon:   //this item has your app icon
-                Intent intent = new Intent(HomeActivity.this, AddDijooFragment.class);
-                intent.putExtra("ID", userID);
-                startActivity(intent);
 
-//                fbHandler.getDijooKeyOrder(dijooFireBase, userID);
-
-
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment prev = getFragmentManager().findFragmentByTag("addDijooFragment");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+                // Create and show the dialog.
+                AddDijooFragment newFragment = AddDijooFragment.newInstance(userID);
+                newFragment.show(ft, "addDijooFragment");
 
                 return true;
 

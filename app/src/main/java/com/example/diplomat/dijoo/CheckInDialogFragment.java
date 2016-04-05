@@ -47,10 +47,6 @@ public class CheckInDialogFragment extends DialogFragment{
         setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Holo_Dialog_NoActionBar);
 
         key = getArguments().getString("key");
-
-
-
-
     }
 
     @Override
@@ -82,8 +78,8 @@ public class CheckInDialogFragment extends DialogFragment{
                 AnotherOne anotherOne = new AnotherOne(updateCount, currentTime, currentDate, key);
 
                 ref.setValue(anotherOne);
-
                 HomeActivity.fbHandler.getDailyTotalForDijoo(allFirebase, key);
+                HomeActivity.fbHandler.addUpdateToOverallTotal(allFirebase, key, updateCount);
                 dismiss();
 
             }
