@@ -222,7 +222,8 @@ public class FirebaseHandler {
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
                 int  updateCount = dataSnapshot.getValue(Dijoo.class).getDijooOverallTotal() + checkIn;
 
                 Map<String, Object> overallTotal = new HashMap<String, Object>();
@@ -231,7 +232,6 @@ public class FirebaseHandler {
 
                 ref.removeEventListener(this);
             }
-
             @Override
             public void onCancelled(FirebaseError firebaseError) {
 

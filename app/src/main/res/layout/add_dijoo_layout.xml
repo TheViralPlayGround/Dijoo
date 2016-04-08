@@ -29,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/title"
+                android:inputType="textCapWords"
                  />
 
         </android.support.design.widget.TextInputLayout>
@@ -49,6 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/category"
+                android:inputType="textCapWords"
                 />
         </android.support.design.widget.TextInputLayout>
 
@@ -68,7 +70,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/Units"
-             />
+                android:inputType="textCapWords"
+                />
         </android.support.design.widget.TextInputLayout>
 
     <LinearLayout

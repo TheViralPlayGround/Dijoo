@@ -198,4 +198,13 @@
     <string name="total">Total</string>
     <string name="Times">Times</string>
     <string name="Units">Unit of Measurement</string>
+
+    <!-- For Login -->
+    <string name="action_logout">Logout</string>
+
+    <string name="login_with_facebook">Login with Facebook</string>
+    <string name="login_with_google">Login with Google+</string>
+    <string name="login_with_twitter">Login with Twitter</string>
+    <string name="login_with_password">Login with Password</string>
+    <string name="login_anonymously">Login Anonymously</string>
 </resources>
